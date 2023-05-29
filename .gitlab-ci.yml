@@ -8,7 +8,7 @@ sonarcloud-check:
     paths:
       - .sonar/cache
   script:
-    - mvn verify sonar:sonar -Dsonar.projectKey=sonarBicletarioPM
+    - mvn verify sonar:sonar -Dsonar.projectKey=GuilhermeMenez_bicicletario-programacao-modular-unirio
   only:
     - merge_requests
     - master
