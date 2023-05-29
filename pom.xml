@@ -13,11 +13,10 @@
 	<version>1.0</version>
 	<name>Echo</name>
 	<description>Echo Project</description>
-	
+
 	<properties>
-	    <sonar.projectKey>projeto-base-pm-unirio-echo-com-spring-boot</sonar.projectKey>
-        <sonar.organization>unirio-pm</sonar.organization>
-    </properties>
+		<sonar.organization>biciletario-pm</sonar.organization>
+	</properties>
 	
 	<dependencies>
 		<dependency>
