@@ -1,6 +1,6 @@
-package com.example.echo.enumerator;
+package com.api.bicicletario.enumerator;
 
-public enum BrasileiroOuEstrangeiro {
+public enum Nacionalidade {
 
     BRASILEIRO("B", "Brasileiro"),
     ESTRANGEIRO("E", "Estrangeiro");
@@ -8,7 +8,7 @@ public enum BrasileiroOuEstrangeiro {
     private String codigo;
     private String descrição;
 
-    BrasileiroOuEstrangeiro(String codigo, String descrição) {
+    Nacionalidade(String codigo, String descrição) {
         this.codigo = codigo;
         this.descrição = descrição;
     }

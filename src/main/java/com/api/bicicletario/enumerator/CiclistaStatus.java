@@ -1,4 +1,4 @@
-package com.example.echo.enumerator;
+package com.api.bicicletario.enumerator;
 
 public enum CiclistaStatus {
 

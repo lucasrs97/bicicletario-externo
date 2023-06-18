@@ -1,9 +1,11 @@
-package com.example.echo.controller;
+package com.api.bicicletario.controller;
 
-import com.example.echo.controller.responses.ResponseEntityError;
-import com.example.echo.exception.ValidatorException;
-import com.example.echo.model.Ciclista;
-import com.example.echo.service.CiclistaService;
+import com.api.bicicletario.dto.CiclistaDTO;
+import com.api.bicicletario.dto.MeioPagamentoDTO;
+import com.api.bicicletario.controller.responses.ResponseEntityError;
+import com.api.bicicletario.exception.ValidatorException;
+import com.api.bicicletario.model.Ciclista;
+import com.api.bicicletario.service.CiclistaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,9 +18,9 @@ public class CiclistaController {
     private CiclistaService ciclistaService;
 
     @PostMapping("/")
-    public ResponseEntity<?> cadastrar(@RequestBody Ciclista ciclista) {
+    public ResponseEntity<?> cadastrar(@RequestBody CiclistaDTO ciclistaDTO, MeioPagamentoDTO meioPagamentoDTO) {
         try {
-            this.ciclistaService.cadastrarCiclista(ciclista);
+            this.ciclistaService.cadastrarCiclista(ciclistaDTO, meioPagamentoDTO);
             return new ResponseEntity<>("E-mail enviado. Aguardando confirmação.", HttpStatus.CREATED);
         } catch (ValidatorException e) {
             return new ResponseEntity<ResponseEntityError>(new ResponseEntityError(e.getMessage(), e.getErrors()), HttpStatus.UNPROCESSABLE_ENTITY);
@@ -38,9 +40,9 @@ public class CiclistaController {
     }
 
     @PutMapping("/")
-    public ResponseEntity<?> alterarDados(@RequestBody Ciclista ciclista) {
+    public ResponseEntity<?> alterar(@RequestBody CiclistaDTO ciclistaDTO) {
         try {
-            this.ciclistaService.cadastrarCiclista(ciclista);
+            this.ciclistaService.alterarCiclista(ciclistaDTO);
             return new ResponseEntity<>("E-mail enviado. Aguardando confirmação.", HttpStatus.OK);
         } catch (ValidatorException e) {
             return new ResponseEntity<ResponseEntityError>(new ResponseEntityError(e.getMessage(), e.getErrors()), HttpStatus.UNPROCESSABLE_ENTITY);

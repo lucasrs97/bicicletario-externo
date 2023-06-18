@@ -1,9 +1,13 @@
-package com.example.echo.service;
+package com.api.bicicletario.service;
 
-import com.example.echo.enumerator.BrasileiroOuEstrangeiro;
-import com.example.echo.enumerator.CiclistaStatus;
-import com.example.echo.exception.ValidatorException;
-import com.example.echo.model.Ciclista;
+import com.api.bicicletario.dao.CartaoDAO;
+import com.api.bicicletario.dao.CiclistaDAO;
+import com.api.bicicletario.enumerator.CiclistaStatus;
+import com.api.bicicletario.dto.CiclistaDTO;
+import com.api.bicicletario.dto.MeioPagamentoDTO;
+import com.api.bicicletario.exception.ValidatorException;
+import com.api.bicicletario.model.Ciclista;
+import com.api.bicicletario.model.CartaoDeCredito;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
@@ -17,13 +21,22 @@ public class CiclistaService {
     @Autowired
     private EmailService emailService;
 
-    public void cadastrarCiclista(Ciclista ciclista) {
+    @Autowired
+    private CiclistaDAO dao;
+
+    @Autowired
+    private CartaoDAO cartaoDAO;
+
+    public void cadastrarCiclista(CiclistaDTO ciclistaDTO, MeioPagamentoDTO meioPagamentoDTO) {
+        Ciclista ciclista = new Ciclista(ciclistaDTO);
+        CartaoDeCredito cartaoDeCredito = new CartaoDeCredito(meioPagamentoDTO);
+
         // [A1] Email já cadastrado ou inválido
         if(!emailService.emailValido(ciclista.getEmail())) {
             throw new ValidatorException("E-mail inválido.");
         }
         // [A3] Cartão reprovado
-        if(!cartaoDeCreditoService.cartaoDeCreditoValido(ciclista.getCartaoDeCredito())) {
+        if(!cartaoDeCreditoService.cartaoDeCreditoValido(cartaoDeCredito)) {
             throw new ValidatorException("Cartão de crédito recusado.");
         }
         // [A2] Dados inválidos
@@ -40,32 +53,41 @@ public class CiclistaService {
         }
     }
 
-    public void alterarCiclista(Ciclista ciclista) {
-        List<String> errors = validarDados(ciclista);
-        emailService.enviarEmail(ciclista.getEmail(), "Dados alterados com sucesso.");
+    public void alterarCiclista(CiclistaDTO ciclistaDTO) {
+        Ciclista ciclista = new Ciclista(ciclistaDTO);
+        try {
+            emailService.enviarEmail(ciclista.getEmail(), "Dados alterados com sucesso.");
+        } catch (Exception e) {
+            throw new ValidatorException("Não foi possível enviar o e-mail");
+        }
     }
 
     private List<String> validarDados(Ciclista ciclista) {
         List<String> errors = new ArrayList<>();
 
-        if (ciclista.getNome() == null) {
-            errors.add("Nome do ciclista não preenchido");
+        if(ciclista.getStatus() == null) {
+            errors.add("Status do ciclista não preenchido.");
         }
-        if(!ciclista.getBrasileiroOuEstrangeiro().equals(BrasileiroOuEstrangeiro.BRASILEIRO)
-                || !ciclista.getBrasileiroOuEstrangeiro().equals(BrasileiroOuEstrangeiro.ESTRANGEIRO)) {
-            errors.add("Brasileiro ou estrangeiro não preenchido");
+        if (ciclista.getNome() == null) {
+            errors.add("Nome do ciclista não preenchido.");
+        }
+        if(ciclista.getNascimento() == null) {
+            errors.add("Data de nascimento não preenchida.");
         }
         if(ciclista.getCpf() == null) {
-            errors.add("CPF não preenchido");
+            errors.add("CPF não preenchido.");
         }
         if(ciclista.getPassaporte() == null) {
-            errors.add("Passaporte não preenchido");
+            errors.add("Passaporte não preenchido.");
         }
-        if(ciclista.getSenha() == null) {
-            errors.add("Senha não preenchida");
+        if(ciclista.getNacionalidade () == null) {
+            errors.add("Nacionalidade não preenchida.");
         }
-        if(ciclista.fotoEnviada() == null) {
-            errors.add("Foto não enviada");
+        if(ciclista.getEmail() == null) {
+            errors.add("E-mail não preenchido.");
+        }
+        if(ciclista.getUrlFotoDocumento() == null) {
+            errors.add("Foto não enviada.");
         }
 
         return errors;
@@ -76,11 +98,7 @@ public class CiclistaService {
             throw new ValidatorException("Dados Inválidos");
         }
 
-        Ciclista ciclista = new Ciclista();
-        ciclista.setId(1L);
-        ciclista.setNome("Teste");
-
-        return ciclista;
+        return dao.recuperarCiclista(idCiclista);
     }
 
     public Ciclista ativar(Long idCiclista) {

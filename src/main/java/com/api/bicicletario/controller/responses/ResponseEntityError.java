@@ -1,4 +1,4 @@
-package com.example.echo.controller.responses;
+package com.api.bicicletario.controller.responses;
 
 import java.util.List;
 

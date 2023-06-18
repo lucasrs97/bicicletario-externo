@@ -1,4 +1,4 @@
-package com.example.echo.webservice;
+package com.api.bicicletario.webservice;
 
 import java.util.List;
 

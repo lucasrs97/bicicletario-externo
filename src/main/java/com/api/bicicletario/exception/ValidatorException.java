@@ -1,4 +1,4 @@
-package com.example.echo.exception;
+package com.api.bicicletario.exception;
 
 import java.util.ArrayList;
 import java.util.List;

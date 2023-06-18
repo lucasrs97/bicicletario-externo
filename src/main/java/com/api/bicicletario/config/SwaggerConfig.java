@@ -1,4 +1,4 @@
-package com.example.echo.config;
+package com.api.bicicletario.config;
 
 import static springfox.documentation.builders.PathSelectors.regex;
 
