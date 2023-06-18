@@ -2,6 +2,7 @@ package com.api.bicicletario.service;
 
 import com.api.bicicletario.dao.CartaoDAO;
 import com.api.bicicletario.dao.CiclistaDAO;
+import com.api.bicicletario.dto.CadastrarCiclistaDTO;
 import com.api.bicicletario.enumerator.CiclistaStatus;
 import com.api.bicicletario.dto.CiclistaDTO;
 import com.api.bicicletario.dto.MeioPagamentoDTO;
@@ -29,9 +30,9 @@ public class CiclistaService {
     @Autowired
     private CartaoDAO cartaoDAO;
 
-    public void cadastrarCiclista(CiclistaDTO ciclistaDTO, MeioPagamentoDTO meioPagamentoDTO) {
-        Ciclista ciclista = new Ciclista(ciclistaDTO);
-        CartaoDeCredito cartaoDeCredito = new CartaoDeCredito(meioPagamentoDTO);
+    public void cadastrarCiclista(CadastrarCiclistaDTO cadastrarCiclistaDTO) {
+        Ciclista ciclista = new Ciclista(cadastrarCiclistaDTO.getCiclista());
+        CartaoDeCredito cartaoDeCredito = new CartaoDeCredito(cadastrarCiclistaDTO.getMeioDePagamento());
 
         // [A1] Email já cadastrado ou inválido
         if(!emailService.emailValido(ciclista.getEmail())) {
@@ -44,32 +45,18 @@ public class CiclistaService {
         // [A2] Dados inválidos
         List<String> errors = validarDados(ciclista);
         if(!errors.isEmpty()) {
-            throw new ValidatorException(errors.toString());
+            throw new ValidatorException("Erro ao cadastrar o ciclista.", errors);
         }
 
         ciclista.setStatus(CiclistaStatus.AGUARDANDO_CONFIRMACAO);
-        try {
-            emailService.enviarEmail(ciclista.getEmail(), "Clique no link abaixo para ativar seu cadastro.");
-        } catch (Exception e) {
-            throw new ValidatorException("Não foi possível enviar o e-mail");
-        }
-    }
 
-    public void alterarCiclista(CiclistaDTO ciclistaDTO) {
-        Ciclista ciclista = new Ciclista(ciclistaDTO);
-        try {
-            emailService.enviarEmail(ciclista.getEmail(), "Dados alterados com sucesso.");
-        } catch (Exception e) {
-            throw new ValidatorException("Não foi possível enviar o e-mail");
-        }
+        dao.salvarCiclista(ciclista);
+        emailService.enviarEmail(ciclista.getEmail(), "Clique no link abaixo para ativar seu cadastro.");
     }
 
     private List<String> validarDados(Ciclista ciclista) {
         List<String> errors = new ArrayList<>();
 
-        if(ciclista.getStatus() == null) {
-            errors.add("Status do ciclista não preenchido.");
-        }
         if (ciclista.getNome() == null) {
             errors.add("Nome do ciclista não preenchido.");
         }
@@ -93,6 +80,13 @@ public class CiclistaService {
         }
 
         return errors;
+    }
+
+    public void alterarCiclista(CiclistaDTO ciclistaDTO) {
+        Ciclista ciclista = new Ciclista(ciclistaDTO);
+
+        dao.alterarCiclista(ciclista);
+        emailService.enviarEmail(ciclista.getEmail(), "Dados alterados com sucesso.");
     }
 
     public Ciclista recuperarCiclista(Long idCiclista) {

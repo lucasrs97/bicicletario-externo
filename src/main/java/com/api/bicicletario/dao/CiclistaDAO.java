@@ -15,7 +15,7 @@ public class CiclistaDAO {
         System.out.println("Salvando o ciclista: " + ciclista.toString());
     }
 
-    public void alterarCartao(Ciclista ciclista) {
+    public void alterarCiclista(Ciclista ciclista) {
         System.out.println("Alterando o ciclista: " + ciclista.toString());
     }
 

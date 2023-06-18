@@ -1,7 +1,10 @@
 package com.api.bicicletario.controller.responses;
 
+import lombok.Data;
+
 import java.util.List;
 
+@Data
 public class ResponseEntityError {
 
     private boolean success;
