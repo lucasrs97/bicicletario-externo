@@ -7,7 +7,9 @@ import com.api.bicicletario.model.Ciclista;
 import com.api.bicicletario.model.CartaoDeCredito;
 import com.api.bicicletario.dto.MeioPagamentoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class CartaoDeCreditoService {
 
     @Autowired

@@ -1,7 +1,9 @@
 package com.api.bicicletario.dao;
 
 import com.api.bicicletario.model.CartaoDeCredito;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class CartaoDAO {
 
     public void salvarCartao(CartaoDeCredito cartaoDeCredito) {

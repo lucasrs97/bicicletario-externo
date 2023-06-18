@@ -4,9 +4,11 @@ import com.api.bicicletario.enumerator.CiclistaStatus;
 import com.api.bicicletario.enumerator.Nacionalidade;
 import com.api.bicicletario.model.Ciclista;
 import com.api.bicicletario.vo.Passaporte;
+import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 
+@Repository
 public class CiclistaDAO {
 
     public void salvarCiclista(Ciclista ciclista) {

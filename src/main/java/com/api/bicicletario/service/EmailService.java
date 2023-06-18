@@ -1,7 +1,9 @@
 package com.api.bicicletario.service;
 
 import com.api.bicicletario.exception.ValidatorException;
+import org.springframework.stereotype.Service;
 
+@Service
 public class EmailService {
 
     public void enviarEmail(String email, String mensagem) {

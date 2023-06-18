@@ -9,10 +9,12 @@ import com.api.bicicletario.exception.ValidatorException;
 import com.api.bicicletario.model.Ciclista;
 import com.api.bicicletario.model.CartaoDeCredito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class CiclistaService {
 
     @Autowired
