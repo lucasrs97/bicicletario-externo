@@ -36,10 +36,10 @@ public class CiclistaController {
     @RequestMapping(method = RequestMethod.POST, value = "/{idCiclista}/ativar", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> confirmarEmail(@PathVariable Long idCiclista) {
         try {
-            Ciclista ciclista = this.ciclistaService.ativar(idCiclista);
+            this.ciclistaService.ativar(idCiclista);
             return new ResponseEntity<>("E-mail confirmado com sucesso.", HttpStatus.OK);
         } catch (ValidatorException e) {
-            return new ResponseEntity<ResponseEntityError>(new ResponseEntityError(e.getMessage(), e.getErrors()), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<ResponseEntityError>(new ResponseEntityError(e.getMessage(), e.getErrors()), HttpStatus.UNPROCESSABLE_ENTITY);
         }
     }
 
