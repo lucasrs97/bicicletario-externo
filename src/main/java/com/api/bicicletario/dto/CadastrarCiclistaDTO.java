@@ -1,9 +1,11 @@
 package com.api.bicicletario.dto;
 
+import com.api.bicicletario.model.CartaoDeCredito;
+import com.api.bicicletario.model.Ciclista;
 import lombok.Data;
 
 @Data
 public class CadastrarCiclistaDTO {
-    private CiclistaDTO ciclista;
-    private MeioPagamentoDTO meioDePagamento;
+    private Ciclista ciclista;
+    private CartaoDeCredito cartaoDeCredito;
 }

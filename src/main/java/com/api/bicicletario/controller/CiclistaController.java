@@ -1,10 +1,6 @@
 package com.api.bicicletario.controller;
 
 import com.api.bicicletario.dto.CadastrarCiclistaDTO;
-import com.api.bicicletario.dto.CiclistaDTO;
-import com.api.bicicletario.dto.MeioPagamentoDTO;
-import com.api.bicicletario.controller.responses.ResponseEntityError;
-import com.api.bicicletario.exception.ValidatorException;
 import com.api.bicicletario.model.Ciclista;
 import com.api.bicicletario.service.CiclistaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +8,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import static com.api.bicicletario.util.Constantes.CICLISTA_ALTERADO_SUCESSO;
+import static com.api.bicicletario.util.Constantes.CICLISTA_CADASTRADO_SUCESSO;
+import static com.api.bicicletario.util.Constantes.EMAIL_CONFIRMADO_SUCESSO;
+import static com.api.bicicletario.util.Constantes.ERRO_ALTERAR_CICLISTA;
+import static com.api.bicicletario.util.Constantes.ERRO_ATIVAR_CICLISATA;
+import static com.api.bicicletario.util.Constantes.ERRO_CADASTRAR_CICLISTA;
+import static com.api.bicicletario.util.Constantes.ERRO_RECUPERAR_CICLISTA;
 
 @RestController
 @RequestMapping("/ciclista")
@@ -24,11 +28,9 @@ public class CiclistaController {
     public ResponseEntity<?> cadastrar(@RequestBody CadastrarCiclistaDTO cadastro) {
         try {
             this.ciclistaService.cadastrarCiclista(cadastro);
-            return new ResponseEntity<>("Ciclista cadastrado com sucesso. Aguardando confirmação do e-mail.", HttpStatus.CREATED);
-        } catch (ValidatorException e) {
-            return new ResponseEntity<ResponseEntityError>(new ResponseEntityError(e.getMessage(), e.getErrors()), HttpStatus.UNPROCESSABLE_ENTITY);
-        } catch (Exception e) {
-            return new ResponseEntity<>("Erro ao cadastrar o ciclista.", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(CICLISTA_CADASTRADO_SUCESSO, HttpStatus.CREATED);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(ERRO_CADASTRAR_CICLISTA, HttpStatus.UNPROCESSABLE_ENTITY);
         }
     }
 
@@ -36,59 +38,30 @@ public class CiclistaController {
     @RequestMapping(method = RequestMethod.POST, value = "/{idCiclista}/ativar", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> confirmarEmail(@PathVariable Long idCiclista) {
         try {
-            Ciclista ciclista = this.ciclistaService.ativar(idCiclista);
-            return new ResponseEntity<>("E-mail confirmado com sucesso.", HttpStatus.OK);
-        } catch (ValidatorException e) {
-            return new ResponseEntity<ResponseEntityError>(new ResponseEntityError(e.getMessage(), e.getErrors()), HttpStatus.BAD_REQUEST);
+            this.ciclistaService.ativarCiclista(idCiclista);
+            return new ResponseEntity<>(EMAIL_CONFIRMADO_SUCESSO, HttpStatus.OK);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(ERRO_ATIVAR_CICLISATA, HttpStatus.UNPROCESSABLE_ENTITY);
         }
     }
 
     @RequestMapping(method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> alterar(@RequestBody CiclistaDTO ciclista) {
+    public ResponseEntity<?> alterar(@RequestBody Ciclista ciclista) {
         try {
             this.ciclistaService.alterarCiclista(ciclista);
-            return new ResponseEntity<>("Ciclista alterado com sucesso.", HttpStatus.OK);
-        } catch (ValidatorException e) {
-            return new ResponseEntity<ResponseEntityError>(new ResponseEntityError(e.getMessage(), e.getErrors()), HttpStatus.UNPROCESSABLE_ENTITY);
-        } catch (Exception e) {
-            return new ResponseEntity<>("Erro ao alterar o ciclista.", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(CICLISTA_ALTERADO_SUCESSO, HttpStatus.OK);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(ERRO_ALTERAR_CICLISTA, HttpStatus.UNPROCESSABLE_ENTITY);
         }
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    @GetMapping("/")
+    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> recuperar(@PathVariable Long idCiclista) {
         try {
             Ciclista ciclista = this.ciclistaService.recuperarCiclista(idCiclista);
             return new ResponseEntity<>(ciclista, HttpStatus.OK);
-        } catch (ValidatorException e) {
-            return new ResponseEntity<ResponseEntityError>(new ResponseEntityError(e.getMessage(), e.getErrors()), HttpStatus.BAD_REQUEST);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(ERRO_RECUPERAR_CICLISTA, HttpStatus.UNPROCESSABLE_ENTITY);
         }
     }
 

@@ -2,10 +2,8 @@ package com.api.bicicletario.service;
 
 import com.api.bicicletario.dao.CartaoDAO;
 import com.api.bicicletario.dao.CiclistaDAO;
-import com.api.bicicletario.exception.ValidatorException;
 import com.api.bicicletario.model.Ciclista;
 import com.api.bicicletario.model.CartaoDeCredito;
-import com.api.bicicletario.dto.MeioPagamentoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,17 +19,19 @@ public class CartaoDeCreditoService {
     @Autowired
     private EmailService emailService;
 
-    public boolean cartaoDeCreditoValido(CartaoDeCredito cartaoDeCredito) {
-        return true;
+    public boolean cartaoDeCreditoInvalido(CartaoDeCredito cartaoDeCredito) {
+        return cartaoDeCredito.getNomeTitular() == null
+                || cartaoDeCredito.getNumero() == null
+                || cartaoDeCredito.getValidade() == null
+                || cartaoDeCredito.getCcv() == null;
     }
 
-    public void alterar(MeioPagamentoDTO meioPagamentoDTO, Long idCiclista) {
+    public void alterar(CartaoDeCredito cartaoDeCredito, Long idCiclista) {
         Ciclista ciclista = dao.recuperarCiclista(idCiclista);
-        CartaoDeCredito cartaoDeCredito = new CartaoDeCredito(meioPagamentoDTO);
 
         // [A2] Cartão reprovado
-        if(!cartaoDeCreditoValido(cartaoDeCredito)) {
-            throw new ValidatorException("Cartão de crédito reprovado.");
+        if(cartaoDeCreditoInvalido(cartaoDeCredito)) {
+            throw new IllegalArgumentException("Cartão de crédito reprovado.");
         }
 
         cartaoDAO.alterarCartao(cartaoDeCredito);

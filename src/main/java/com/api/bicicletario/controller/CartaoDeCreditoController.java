@@ -1,7 +1,6 @@
 package com.api.bicicletario.controller;
 
-import com.api.bicicletario.dto.MeioPagamentoDTO;
-import com.api.bicicletario.exception.ValidatorException;
+import com.api.bicicletario.model.CartaoDeCredito;
 import com.api.bicicletario.service.CartaoDeCreditoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,6 +10,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import static com.api.bicicletario.util.Constantes.DADOS_CARTAO_ALTERADOS_SUCESSO;
+import static com.api.bicicletario.util.Constantes.ERRO_ALTERAR_DADOS_CARTAO;
+
 @RestController("/cartaoDeCredito")
 public class CartaoDeCreditoController {
 
@@ -18,14 +20,12 @@ public class CartaoDeCreditoController {
     private CartaoDeCreditoService cartaoDeCreditoService;
 
     @PutMapping("/{idCiclista}")
-    public ResponseEntity<?> alterar(@RequestBody MeioPagamentoDTO meioPagamentoDTO, @PathVariable String idCiclista) {
+    public ResponseEntity<?> alterarCartao(@RequestBody CartaoDeCredito cartaoDeCredito, @PathVariable Long idCiclista) {
         try {
-            this.cartaoDeCreditoService.alterar(meioPagamentoDTO, Long.valueOf(idCiclista));
-            return new ResponseEntity<>("Dados do cartão: " + meioPagamentoDTO.getNumero() + " alterados com sucesso", HttpStatus.OK);
-        } catch (ValidatorException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
-        } catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+            this.cartaoDeCreditoService.alterar(cartaoDeCredito, idCiclista);
+            return new ResponseEntity<>(DADOS_CARTAO_ALTERADOS_SUCESSO, HttpStatus.OK);
+        }  catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(ERRO_ALTERAR_DADOS_CARTAO, HttpStatus.UNPROCESSABLE_ENTITY);
         }
     }
 
