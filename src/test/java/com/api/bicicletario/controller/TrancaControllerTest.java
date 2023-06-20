@@ -1,4 +1,4 @@
-import com.api.bicicletario.controller.TrancaController;
+package com.api.bicicletario.controller;
 import com.api.bicicletario.enumerator.TrancaStatus;
 import com.api.bicicletario.model.Tranca;
 import com.api.bicicletario.service.TrancaService;
