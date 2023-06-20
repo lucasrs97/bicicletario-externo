@@ -1,4 +1,5 @@
 import com.api.bicicletario.controller.TrancaController;
+import com.api.bicicletario.enumerator.TrancaStatus;
 import com.api.bicicletario.model.Tranca;
 import com.api.bicicletario.service.TrancaService;
 import org.junit.jupiter.api.BeforeEach;
@@ -33,7 +34,7 @@ class TrancaControllerTest {
     @Test
     void testGetTrancas() {
         List<Tranca> trancas = new ArrayList<>();
-        trancas.add(new Tranca(1, "Bicicleta 1", 1, "Localização 1", "2022", "Modelo 1", "LIVRE"));
+        trancas.add(new Tranca(1, "Bicicleta 1", 1, "Localização 1", "2022", "Modelo 1", TrancaStatus.LIVRE));
         when(trancaService.getTrancas()).thenReturn(trancas);
 
         List<Tranca> result = trancaController.getTrancas();
@@ -45,7 +46,7 @@ class TrancaControllerTest {
     @Test
     void testGetTrancaById_ExistingId() {
         long trancaId = 1;
-        Tranca tranca = new Tranca(1, "Bicicleta 1", 1, "Localização 1", "2022", "Modelo 1", "LIVRE");
+        Tranca tranca = new Tranca(1, "Bicicleta 1", 1, "Localização 1", "2022", "Modelo 1", TrancaStatus.LIVRE);
         when(trancaService.getTrancaById(1)).thenReturn(tranca);
 
         ResponseEntity<Tranca> response = trancaController.getTrancaById(trancaId);
@@ -68,7 +69,7 @@ class TrancaControllerTest {
 
     @Test
     void testCreateTranca() {
-        Tranca tranca = new Tranca(1, "Bicicleta 1", 1, "Localização 1", "2022", "Modelo 1", "LIVRE");
+        Tranca tranca = new Tranca(1, "Bicicleta 1", 1, "Localização 1", "2022", "Modelo 1", TrancaStatus.LIVRE);
         when(trancaService.createTranca(tranca)).thenReturn(tranca);
 
         ResponseEntity<Tranca> response = trancaController.createTranca(tranca);
@@ -81,7 +82,7 @@ class TrancaControllerTest {
     @Test
     void testUpdateTranca_ExistingId() {
         long trancaId = 1;
-        Tranca tranca = new Tranca(1, "Bicicleta 1", 1, "Localização 1", "2022", "Modelo 1", "LIVRE");
+        Tranca tranca = new Tranca(1, "Bicicleta 1", 1, "Localização 1", "2022", "Modelo 1", TrancaStatus.LIVRE);
         when(trancaService.updateTranca(tranca)).thenReturn(tranca);
 
         ResponseEntity<Tranca> response = trancaController.updateTranca(trancaId, tranca);
@@ -94,7 +95,7 @@ class TrancaControllerTest {
     @Test
     void testUpdateTranca_NonExistingId() {
         long trancaId = 2;
-        Tranca tranca = new Tranca(2, "Bicicleta 2", 2, "Localização 2", "2021", "Modelo 2", "OCUPADA");
+        Tranca tranca = new Tranca(2, "Bicicleta 2", 2, "Localização 2", "2021", "Modelo 2", TrancaStatus.OCUPADA);
         when(trancaService.updateTranca(tranca)).thenReturn(null);
 
         ResponseEntity<Tranca> response = trancaController.updateTranca(trancaId, tranca);
@@ -137,7 +138,7 @@ class TrancaControllerTest {
     @Test
     void testUpdateTranca_NonExistingId2() {
         long trancaId = 2;
-        Tranca tranca = new Tranca(2, "Bicicleta 2", 2, "Localização 2", "2021", "Modelo 2", "OCUPADA");
+        Tranca tranca = new Tranca(2, "Bicicleta 2", 2, "Localização 2", "2021", "Modelo 2", TrancaStatus.OCUPADA);
         when(trancaService.updateTranca(tranca)).thenReturn(null);
 
         ResponseEntity<Tranca> response = trancaController.updateTranca(trancaId, tranca);

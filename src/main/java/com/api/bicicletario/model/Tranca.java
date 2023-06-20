@@ -1,5 +1,7 @@
 package com.api.bicicletario.model;
 
+import com.api.bicicletario.enumerator.TrancaStatus;
+
 // Model: Tranca.java
 public class Tranca {
     private int id;
@@ -8,9 +10,9 @@ public class Tranca {
     private String localizacao;
     private String anoDeFabricacao;
     private String modelo;
-    private String status;
+    private TrancaStatus status;
 
-    public Tranca(int id, String bicicleta, int numero, String localizacao, String anoDeFabricacao, String modelo, String status) {
+    public Tranca(int id, String bicicleta, int numero, String localizacao, String anoDeFabricacao, String modelo, TrancaStatus status) {
         this.id = id;
         this.bicicleta = bicicleta;
         this.numero = numero;
@@ -72,13 +74,14 @@ public class Tranca {
         this.modelo = modelo;
     }
 
-    public String getStatus() {
+    public TrancaStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(TrancaStatus status) {
         this.status = status;
     }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -93,7 +96,7 @@ public class Tranca {
 
         return id == other.id && bicicleta.equals(other.bicicleta) && numero == other.numero &&
                 localizacao.equals(other.localizacao) && anoDeFabricacao.equals(other.anoDeFabricacao) &&
-                modelo.equals(other.modelo) && status.equals(other.status);
+                modelo.equals(other.modelo) && status == other.status;
     }
 
     @Override
@@ -108,6 +111,4 @@ public class Tranca {
         result = 31 * result + (status != null ? status.hashCode() : 0);
         return result;
     }
-
-
 }

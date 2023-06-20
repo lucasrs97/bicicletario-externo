@@ -1,6 +1,6 @@
 package com.api.bicicletario.enumerator;
 
-enum StatusTranca {
+public enum TrancaStatus {
     LIVRE,
     OCUPADA,
     NOVA,

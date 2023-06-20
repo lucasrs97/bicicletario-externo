@@ -1,3 +1,4 @@
+import com.api.bicicletario.enumerator.TrancaStatus;
 import com.api.bicicletario.model.Tranca;
 import com.api.bicicletario.service.TrancaService;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,21 +18,21 @@ public class TrancaServiceTest {
     @BeforeEach
     public void setUp() {
         trancas = new ArrayList<>();
-        trancas.add(new Tranca(1, "Bicicleta 1", 1, "Localização 1", "2022", "Modelo 1", "LIVRE"));
-        trancas.add(new Tranca(2, "Bicicleta 2", 2, "Localização 2", "2021", "Modelo 2", "OCUPADA"));
-        trancas.add(new Tranca(3, "Bicicleta 3", 3, "Localização 3", "2020", "Modelo 3", "NOVA"));
-        trancas.add(new Tranca(4, "Bicicleta 4", 4, "Localização 4", "2019", "Modelo 4", "APOSENTADA"));
-        trancas.add(new Tranca(5, "Bicicleta 5", 5, "Localização 5", "2023", "Modelo 5", "EM_REPARO"));
-        trancas.add(new Tranca(6, "Bicicleta 6", 6, "Localização 6", "2022", "Modelo 6", "LIVRE"));
-        trancas.add(new Tranca(7, "Bicicleta 7", 7, "Localização 7", "2021", "Modelo 7", "OCUPADA"));
-        trancas.add(new Tranca(8, "Bicicleta 8", 8, "Localização 8", "2020", "Modelo 8", "NOVA"));
-        trancas.add(new Tranca(9, "Bicicleta 9", 9, "Localização 9", "2019", "Modelo 9", "APOSENTADA"));
-        trancas.add(new Tranca(10, "Bicicleta 10", 10, "Localização 10", "2023", "Modelo 10", "EM_REPARO"));
-        trancas.add(new Tranca(11, "Bicicleta 11", 11, "Localização 11", "2022", "Modelo 11", "LIVRE"));
-        trancas.add(new Tranca(12, "Bicicleta 12", 12, "Localização 12", "2021", "Modelo 12", "OCUPADA"));
-        trancas.add(new Tranca(13, "Bicicleta 13", 13, "Localização 13", "2020", "Modelo 13", "NOVA"));
-        trancas.add(new Tranca(14, "Bicicleta 14", 14, "Localização 14", "2019", "Modelo 14", "APOSENTADA"));
-        trancas.add(new Tranca(15, "Bicicleta 15", 15, "Localização 15", "2023", "Modelo 15", "EM_REPARO"));
+        trancas.add(new Tranca(1, "Bicicleta 1", 1, "Localização 1", "2022", "Modelo 1", TrancaStatus.LIVRE));
+        trancas.add(new Tranca(2, "Bicicleta 2", 2, "Localização 2", "2021", "Modelo 2", TrancaStatus.OCUPADA));
+        trancas.add(new Tranca(3, "Bicicleta 3", 3, "Localização 3", "2020", "Modelo 3", TrancaStatus.NOVA));
+        trancas.add(new Tranca(4, "Bicicleta 4", 4, "Localização 4", "2019", "Modelo 4", TrancaStatus.APOSENTADA));
+        trancas.add(new Tranca(5, "Bicicleta 5", 5, "Localização 5", "2023", "Modelo 5", TrancaStatus.EM_REPARO));
+        trancas.add(new Tranca(6, "Bicicleta 6", 6, "Localização 6", "2022", "Modelo 6", TrancaStatus.LIVRE));
+        trancas.add(new Tranca(7, "Bicicleta 7", 7, "Localização 7", "2021", "Modelo 7", TrancaStatus.OCUPADA));
+        trancas.add(new Tranca(8, "Bicicleta 8", 8, "Localização 8", "2020", "Modelo 8", TrancaStatus.NOVA));
+        trancas.add(new Tranca(9, "Bicicleta 9", 9, "Localização 9", "2019", "Modelo 9", TrancaStatus.APOSENTADA));
+        trancas.add(new Tranca(10, "Bicicleta 10", 10, "Localização 10", "2023", "Modelo 10", TrancaStatus.EM_REPARO));
+        trancas.add(new Tranca(11, "Bicicleta 11", 11, "Localização 11", "2022", "Modelo 11", TrancaStatus.LIVRE));
+        trancas.add(new Tranca(12, "Bicicleta 12", 12, "Localização 12", "2021", "Modelo 12", TrancaStatus.OCUPADA));
+        trancas.add(new Tranca(13, "Bicicleta 13", 13, "Localização 13", "2020", "Modelo 13", TrancaStatus.NOVA));
+        trancas.add(new Tranca(14, "Bicicleta 14", 14, "Localização 14", "2019", "Modelo 14", TrancaStatus.APOSENTADA));
+        trancas.add(new Tranca(15, "Bicicleta 15", 15, "Localização 15", "2023", "Modelo 15", TrancaStatus.EM_REPARO));
 
         trancaService = new TrancaService(trancas);
     }
@@ -46,7 +47,7 @@ public class TrancaServiceTest {
     @Test
     public void testGetTrancaById() {
         int trancaId = 1;
-        Tranca expectedTranca = new Tranca(1, "Bicicleta 1", 1, "Localização 1", "2022", "Modelo 1", "LIVRE");
+        Tranca expectedTranca = new Tranca(1, "Bicicleta 1", 1, "Localização 1", "2022", "Modelo 1", TrancaStatus.LIVRE);
 
         Tranca result = trancaService.getTrancaById(trancaId);
 
@@ -61,7 +62,7 @@ public class TrancaServiceTest {
 
     @Test
     public void testCreateTranca() {
-        Tranca tranca = new Tranca(16, "Bicicleta 16", 16, "Localização 16", "2023", "Modelo 16", "NOVA");
+        Tranca tranca = new Tranca(16, "Bicicleta 16", 16, "Localização 16", "2023", "Modelo 16", TrancaStatus.NOVA);
 
         Tranca result = trancaService.createTranca(tranca);
 
@@ -71,13 +72,13 @@ public class TrancaServiceTest {
 
     @Test
     public void testUpdateTranca() {
-        Tranca tranca = new Tranca(1, "Bicicleta 1", 1, "Localização 1 Atualizada", "2022", "Modelo 1", "APOSENTADA");
+        Tranca tranca = new Tranca(1, "Bicicleta 1", 1, "Localização 1 Atualizada", "2022", "Modelo 1", TrancaStatus.APOSENTADA);
 
         Tranca result = trancaService.updateTranca(tranca);
 
         assertEquals(tranca, result);
         assertEquals("Localização 1 Atualizada", trancaService.getTrancaById(1).getLocalizacao());
-        assertEquals("APOSENTADA", trancaService.getTrancaById(1).getStatus());
+        assertEquals(TrancaStatus.APOSENTADA, trancaService.getTrancaById(1).getStatus());
     }
 
     @Test
@@ -107,7 +108,7 @@ public class TrancaServiceTest {
 
     @Test
     public void testCreateTranca_WithExistingId() {
-        Tranca tranca = new Tranca(1, "Bicicleta 16", 16, "Localização 16", "2023", "Modelo 16", "NOVA");
+        Tranca tranca = new Tranca(1, "Bicicleta 16", 16, "Localização 16", "2023", "Modelo 16",  TrancaStatus.NOVA);
 
         Tranca result = trancaService.createTranca(tranca);
 
@@ -117,7 +118,7 @@ public class TrancaServiceTest {
 
     @Test
     public void testUpdateTranca_WithInvalidId() {
-        Tranca tranca = new Tranca(20, "Bicicleta 20", 20, "Localização 20", "2022", "Modelo 20", "APOSENTADA");
+        Tranca tranca = new Tranca(20, "Bicicleta 20", 20, "Localização 20", "2022", "Modelo 20", TrancaStatus.APOSENTADA);
 
         Tranca result = trancaService.updateTranca(tranca);
 
@@ -160,7 +161,7 @@ public class TrancaServiceTest {
 
     @Test
     public void testCreateTranca_NullTranca() {
-        Tranca tranca = null;
+
 
         Tranca result = null;
 
@@ -171,18 +172,18 @@ public class TrancaServiceTest {
 
     @Test
     public void testUpdateTranca_WithExistingId() {
-        Tranca tranca = new Tranca(1, "Bicicleta 1", 1, "Localização 1 Atualizada", "2022", "Modelo 1", "APOSENTADA");
+        Tranca tranca = new Tranca(1, "Bicicleta 1", 1, "Localização 1 Atualizada", "2022", "Modelo 1", TrancaStatus.APOSENTADA);
 
         Tranca result = trancaService.updateTranca(tranca);
 
         assertEquals(tranca, result);
         assertEquals("Localização 1 Atualizada", trancaService.getTrancaById(1).getLocalizacao());
-        assertEquals("APOSENTADA", trancaService.getTrancaById(1).getStatus());
+        assertEquals(TrancaStatus.APOSENTADA, trancaService.getTrancaById(1).getStatus());
     }
 
     @Test
     public void testUpdateTranca_WithInvalidId2() {
-        Tranca tranca = new Tranca(20, "Bicicleta 20", 20, "Localização 20", "2022", "Modelo 20", "APOSENTADA");
+        Tranca tranca = new Tranca(20, "Bicicleta 20", 20, "Localização 20", "2022", "Modelo 20", TrancaStatus.APOSENTADA);
 
         Tranca result = trancaService.updateTranca(tranca);
 
@@ -232,7 +233,7 @@ public class TrancaServiceTest {
 
     @Test
     public void testCreateTranca_WithExistingId2() {
-        Tranca tranca = new Tranca(1, "Bicicleta 16", 16, "Localização 16", "2023", "Modelo 16", "NOVA");
+        Tranca tranca = new Tranca(1, "Bicicleta 16", 16, "Localização 16", "2023", "Modelo 16", TrancaStatus.NOVA);
 
         Tranca result = trancaService.createTranca(tranca);
 

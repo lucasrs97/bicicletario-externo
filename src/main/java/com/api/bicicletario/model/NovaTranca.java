@@ -1,11 +1,21 @@
 package com.api.bicicletario.model;
 
+import com.api.bicicletario.enumerator.TrancaStatus;
+
 public class NovaTranca {
     private Integer numero;
     private String localizacao;
     private String anoDeFabricacao;
     private String modelo;
-    private String status;
+    private TrancaStatus status;
+
+    public NovaTranca(Integer numero, String localizacao, String anoDeFabricacao, String modelo, TrancaStatus status) {
+        this.numero = numero;
+        this.localizacao = localizacao;
+        this.anoDeFabricacao = anoDeFabricacao;
+        this.modelo = modelo;
+        this.status = status;
+    }
 
     public Integer getNumero() {
         return numero;
@@ -39,11 +49,11 @@ public class NovaTranca {
         this.modelo = modelo;
     }
 
-    public String getStatus() {
+    public TrancaStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(TrancaStatus status) {
         this.status = status;
     }
 }

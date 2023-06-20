@@ -1,3 +1,4 @@
+import com.api.bicicletario.enumerator.TrancaStatus;
 import com.api.bicicletario.model.Tranca;
 import org.junit.Assert;
 import org.junit.Before;
@@ -9,7 +10,7 @@ public class TrancaTest {
 
     @Before
     public void setUp() {
-        tranca = new Tranca(1, "Bicicleta1", 123, "Local1", "2021", "Modelo1", "Ativo");
+        tranca = new Tranca(1, "Bicicleta1", 123, "Local1", "2021", "Modelo1", TrancaStatus.LIVRE);
     }
 
     @Test
@@ -80,24 +81,24 @@ public class TrancaTest {
 
     @Test
     public void testGetStatus() {
-        Assert.assertEquals("Ativo", tranca.getStatus());
+        Assert.assertEquals(TrancaStatus.LIVRE, tranca.getStatus());
     }
 
     @Test
     public void testSetStatus() {
-        tranca.setStatus("Inativo");
-        Assert.assertEquals("Inativo", tranca.getStatus());
+        tranca.setStatus(TrancaStatus.valueOf(String.valueOf(TrancaStatus.APOSENTADA)));
+        Assert.assertEquals(TrancaStatus.APOSENTADA, tranca.getStatus());
     }
 
     @Test
     public void testEquals() {
-        Tranca other = new Tranca(1, "Bicicleta1", 123, "Local1", "2021", "Modelo1", "Ativo");
+        Tranca other = new Tranca(1, "Bicicleta1", 123, "Local1", "2021", "Modelo1", TrancaStatus.LIVRE);
         Assert.assertEquals(tranca, other);
     }
 
     @Test
     public void testNotEquals() {
-        Tranca other = new Tranca(2, "Bicicleta2", 456, "Local2", "2022", "Modelo2", "Inativo");
+        Tranca other = new Tranca(2, "Bicicleta2", 456, "Local2", "2022", "Modelo2", TrancaStatus.LIVRE);
         Assert.assertNotEquals(tranca, other);
     }
 
@@ -116,7 +117,7 @@ public class TrancaTest {
 
     @Test
     public void testHashCode() {
-        Tranca other = new Tranca(1, "Bicicleta1", 123, "Local1", "2021", "Modelo1", "Ativo");
+        Tranca other = new Tranca(1, "Bicicleta1", 123, "Local1", "2021", "Modelo1", TrancaStatus.LIVRE);
         Assert.assertEquals(tranca.hashCode(), other.hashCode());
     }
 }
