@@ -31,6 +31,10 @@ public class CiclistaService {
     private CartaoDAO cartaoDAO;
 
     public void cadastrarCiclista(CadastrarCiclistaDTO cadastrarCiclistaDTO) {
+        if(cadastrarCiclistaDTO == null) {
+            throw new IllegalArgumentException(ERRO_CADASTRAR_CICLISTA);
+        }
+
         if(cadastrarCiclistaDTO.getCiclista() == null || cadastrarCiclistaDTO.getCartaoDeCredito() == null) {
             throw new IllegalArgumentException(ERRO_CADASTRAR_CICLISTA);
         }
