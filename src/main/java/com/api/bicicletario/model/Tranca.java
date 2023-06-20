@@ -1,35 +1,50 @@
 package com.api.bicicletario.model;
 
+// Model: Tranca.java
 public class Tranca {
-    private Integer id;
-    private Integer bicicleta;
-    private Integer numero;
+    private int id;
+    private String bicicleta;
+    private int numero;
     private String localizacao;
     private String anoDeFabricacao;
     private String modelo;
     private String status;
 
-    public Integer getId() {
+    public Tranca(int id, String bicicleta, int numero, String localizacao, String anoDeFabricacao, String modelo, String status) {
+        this.id = id;
+        this.bicicleta = bicicleta;
+        this.numero = numero;
+        this.localizacao = localizacao;
+        this.anoDeFabricacao = anoDeFabricacao;
+        this.modelo = modelo;
+        this.status = status;
+    }
+
+    public Tranca() {
+
+    }
+
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public Integer getBicicleta() {
+    public String getBicicleta() {
         return bicicleta;
     }
 
-    public void setBicicleta(Integer bicicleta) {
+    public void setBicicleta(String bicicleta) {
         this.bicicleta = bicicleta;
     }
 
-    public Integer getNumero() {
+    public int getNumero() {
         return numero;
     }
 
-    public void setNumero(Integer numero) {
+    public void setNumero(int numero) {
         this.numero = numero;
     }
 
@@ -64,4 +79,21 @@ public class Tranca {
     public void setStatus(String status) {
         this.status = status;
     }
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+
+        Tranca other = (Tranca) obj;
+
+        return id == other.id && bicicleta.equals(other.bicicleta) && numero == other.numero &&
+                localizacao.equals(other.localizacao) && anoDeFabricacao.equals(other.anoDeFabricacao) &&
+                modelo.equals(other.modelo) && status.equals(other.status);
+    }
+
 }
