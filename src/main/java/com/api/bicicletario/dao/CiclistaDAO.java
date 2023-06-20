@@ -4,20 +4,22 @@ import com.api.bicicletario.enumerator.CiclistaStatus;
 import com.api.bicicletario.enumerator.Nacionalidade;
 import com.api.bicicletario.model.Ciclista;
 import com.api.bicicletario.vo.Passaporte;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+@Slf4j
 @Repository
 public class CiclistaDAO {
 
     public void salvarCiclista(Ciclista ciclista) {
-        System.out.println("Salvando o ciclista: " + ciclista.toString());
+        log.info("Salvando o ciclista: " + ciclista.toString());
     }
 
     public void alterarCiclista(Ciclista ciclista) {
-        System.out.println("Alterando o ciclista: " + ciclista.toString());
+        log.info("Alterando o ciclista: " + ciclista.toString());
     }
 
     public Ciclista recuperarCiclista(Long id) {
