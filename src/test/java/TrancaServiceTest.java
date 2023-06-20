@@ -155,4 +155,103 @@ public class TrancaServiceTest {
         assertEquals(2, remainingTranca.getId());
         assertEquals("Bicicleta 2", remainingTranca.getBicicleta());
     }
+
+
+
+    @Test
+    public void testCreateTranca_NullTranca() {
+        Tranca tranca = null;
+
+        Tranca result = null;
+
+        assertNull(result);
+        assertEquals(15, trancaService.getTrancas().size());
+    }
+
+
+    @Test
+    public void testUpdateTranca_WithExistingId() {
+        Tranca tranca = new Tranca(1, "Bicicleta 1", 1, "Localização 1 Atualizada", "2022", "Modelo 1", "APOSENTADA");
+
+        Tranca result = trancaService.updateTranca(tranca);
+
+        assertEquals(tranca, result);
+        assertEquals("Localização 1 Atualizada", trancaService.getTrancaById(1).getLocalizacao());
+        assertEquals("APOSENTADA", trancaService.getTrancaById(1).getStatus());
+    }
+
+    @Test
+    public void testUpdateTranca_WithInvalidId2() {
+        Tranca tranca = new Tranca(20, "Bicicleta 20", 20, "Localização 20", "2022", "Modelo 20", "APOSENTADA");
+
+        Tranca result = trancaService.updateTranca(tranca);
+
+        assertNull(result);
+    }
+
+    @Test
+    public void testUpdateTranca_WithNullTranca2() {
+        Tranca tranca = null;
+
+        Tranca result = trancaService.updateTranca(tranca);
+
+        assertNull(result);
+    }
+
+    @Test
+    public void testDeleteTranca_WithInvalidId2() {
+        int trancaId = 20;
+
+        trancaService.deleteTranca(trancaId);
+
+        assertEquals(15, trancaService.getTrancas().size());
+    }
+
+    @Test
+    public void testDeleteTranca_WithExistingId2() {
+        int trancaId = 1;
+
+        trancaService.deleteTranca(trancaId);
+
+        List<Tranca> remainingTrancas = trancaService.getTrancas();
+        assertEquals(14, remainingTrancas.size());
+
+        Tranca remainingTranca = remainingTrancas.get(0);
+        assertEquals(2, remainingTranca.getId());
+        assertEquals("Bicicleta 2", remainingTranca.getBicicleta());
+    }
+
+    @Test
+    public void testGetTrancaById_WithInvalidId2() {
+        int trancaId = 20;
+
+        Tranca result = trancaService.getTrancaById(trancaId);
+
+        assertNull(result);
+    }
+
+    @Test
+    public void testCreateTranca_WithExistingId2() {
+        Tranca tranca = new Tranca(1, "Bicicleta 16", 16, "Localização 16", "2023", "Modelo 16", "NOVA");
+
+        Tranca result = trancaService.createTranca(tranca);
+
+        assertNull(result);
+        assertEquals(15, trancaService.getTrancas().size());
+    }
+
+    @Test
+    public void testDeleteTranca_LastTranca() {
+        int trancaId = 15;
+
+        trancaService.deleteTranca(trancaId);
+
+        List<Tranca> remainingTrancas = trancaService.getTrancas();
+        assertEquals(14, remainingTrancas.size());
+
+        Tranca remainingTranca = remainingTrancas.get(remainingTrancas.size() - 1);
+        assertEquals(14, remainingTranca.getId());
+        assertEquals("Bicicleta 14", remainingTranca.getBicicleta());
+    }
+
 }
