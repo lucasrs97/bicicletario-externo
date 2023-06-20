@@ -6,7 +6,8 @@ import com.api.bicicletario.model.Ciclista;
 import com.api.bicicletario.vo.Passaporte;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDate;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 @Repository
 public class CiclistaDAO {
@@ -24,12 +25,20 @@ public class CiclistaDAO {
         ciclista.setId(id);
         ciclista.setStatus(CiclistaStatus.ATIVO);
         ciclista.setNome("Lucas");
-        ciclista.setNascimento(LocalDate.of(1997,2,22));
         ciclista.setCpf("123.456.789-10");
-        ciclista.setPassaporte(new Passaporte("123,", LocalDate.of(2030,10,15), "BR"));
         ciclista.setNacionalidade(Nacionalidade.BRASILEIRO);
         ciclista.setEmail("Lucas@gmail.com");
         ciclista.setUrlFotoDocumento("api.foto/img001");
+
+        String dataNascimento = "22/02/1997";
+        String dataValidadePassaporte = "15/10/2030";
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        try {
+            ciclista.setNascimento(dateFormat.parse(dataNascimento));
+            ciclista.setPassaporte(new Passaporte("123,", dateFormat.parse(dataValidadePassaporte), "BR"));
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
 
         return ciclista;
     }

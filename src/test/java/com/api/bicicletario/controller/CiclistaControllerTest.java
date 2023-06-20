@@ -2,13 +2,14 @@ package com.api.bicicletario.controller;
 
 import com.api.bicicletario.builder.CadastrarCiclistaDTOBuilder;
 import com.api.bicicletario.dto.CadastrarCiclistaDTO;
-import com.api.bicicletario.exception.ValidatorException;
+import com.api.bicicletario.model.Ciclista;
 import com.api.bicicletario.service.CiclistaService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -19,6 +20,13 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import static com.api.bicicletario.util.Constantes.CICLISTA_ALTERADO_SUCESSO;
+import static com.api.bicicletario.util.Constantes.CICLISTA_CADASTRADO_SUCESSO;
+import static com.api.bicicletario.util.Constantes.EMAIL_CONFIRMADO_SUCESSO;
+import static com.api.bicicletario.util.Constantes.ERRO_ALTERAR_CICLISTA;
+import static com.api.bicicletario.util.Constantes.ERRO_ATIVAR_CICLISATA;
+import static com.api.bicicletario.util.Constantes.ERRO_CADASTRAR_CICLISTA;
+
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -27,43 +35,79 @@ public class CiclistaControllerTest {
     @MockBean
     private CiclistaService ciclistaService;
 
+    @Autowired
     private MockMvc mockMvc;
 
     @Test
     void cadastrarCiclista_comDadosValidos_deveRetornarCreated() throws Exception {
         CadastrarCiclistaDTO cadastro = CadastrarCiclistaDTOBuilder.build();
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/ciclistas")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(obterStringJson(cadastro)))
-                .andExpect(MockMvcResultMatchers.status().isCreated())
-                .andExpect(MockMvcResultMatchers.content().string("Ciclista cadastrado com sucesso. Aguardando confirmação do e-mail."))
-                .andDo(MockMvcResultHandlers.print());
+        mockMvc.perform(MockMvcRequestBuilders.post("/ciclista")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(obterStringJson(cadastro)))
+            .andExpect(MockMvcResultMatchers.status().isCreated())
+            .andExpect(MockMvcResultMatchers.content().string(CICLISTA_CADASTRADO_SUCESSO))
+            .andDo(MockMvcResultHandlers.print());
     }
 
     @Test
     void cadastrarCiclista_comDadosInvalidos_deveRetornarUnprocessableEntity() throws Exception {
         CadastrarCiclistaDTO cadastro = CadastrarCiclistaDTOBuilder.build();
-        Mockito.doThrow(new ValidatorException("Erro ao cadastrar o ciclista.", null)).when(ciclistaService).cadastrarCiclista(Mockito.any());
+        Mockito.doThrow(new IllegalArgumentException(ERRO_CADASTRAR_CICLISTA, null)).when(ciclistaService).cadastrarCiclista(Mockito.any());
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/ciclistas")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(obterStringJson(cadastro)))
-                .andExpect(MockMvcResultMatchers.status().isUnprocessableEntity())
-                .andDo(MockMvcResultHandlers.print());
+        mockMvc.perform(MockMvcRequestBuilders.post("/ciclista")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(obterStringJson(cadastro)))
+            .andExpect(MockMvcResultMatchers.status().isUnprocessableEntity())
+            .andExpect(MockMvcResultMatchers.content().string(ERRO_CADASTRAR_CICLISTA))
+            .andDo(MockMvcResultHandlers.print());
     }
 
     @Test
-    void cadastrarCiclista_WithException_ReturnsNotFound() throws Exception {
-        CadastrarCiclistaDTO cadastro = CadastrarCiclistaDTOBuilder.build();
-        Mockito.doThrow(new Exception("Erro ao cadastrar o ciclista.")).when(ciclistaService).cadastrarCiclista(Mockito.any());
+    void confirmarEmail_comDadosValidos_deveRetornarOK() throws Exception {
+        long idCiclista = 1L;
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/ciclistas")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(obterStringJson(cadastro)))
-                .andExpect(MockMvcResultMatchers.status().isNotFound())
-                .andExpect(MockMvcResultMatchers.content().string("Erro ao cadastrar o ciclista."))
-                .andDo(MockMvcResultHandlers.print());
+        mockMvc.perform(MockMvcRequestBuilders.post("/ciclista/{idCiclista}/ativar", idCiclista)
+            .contentType(MediaType.APPLICATION_JSON))
+            .andExpect(MockMvcResultMatchers.status().isOk())
+            .andExpect(MockMvcResultMatchers.content().string(EMAIL_CONFIRMADO_SUCESSO))
+            .andDo(MockMvcResultHandlers.print());
+    }
+
+    @Test
+    void confirmarEmail_comDadosInvalidos_deveRetornarUnprocessableEntity() throws Exception {
+        long idCiclista = 1L;
+        Mockito.doThrow(new IllegalArgumentException(ERRO_ATIVAR_CICLISATA, null)).when(ciclistaService).ativarCiclista(idCiclista);
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/ciclista/{idCiclista}/ativar", idCiclista)
+            .contentType(MediaType.APPLICATION_JSON))
+            .andExpect(MockMvcResultMatchers.status().isUnprocessableEntity())
+            .andExpect(MockMvcResultMatchers.content().string(ERRO_ATIVAR_CICLISATA));
+    }
+
+    @Test
+    void alterarCiclista_comDadosValidos_deveRetornarOK() throws Exception {
+        Ciclista ciclista = CadastrarCiclistaDTOBuilder.build().getCiclista();
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/ciclista")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(obterStringJson(ciclista)))
+            .andExpect(MockMvcResultMatchers.status().isOk())
+            .andExpect(MockMvcResultMatchers.content().string(CICLISTA_ALTERADO_SUCESSO))
+            .andDo(MockMvcResultHandlers.print());
+    }
+
+    @Test
+    void alterarCiclista_comDadosInvalidos_deveRetornarUnprocessableEntity() throws Exception {
+        Ciclista ciclista = CadastrarCiclistaDTOBuilder.build().getCiclista();
+        Mockito.doThrow(new IllegalArgumentException(ERRO_ALTERAR_CICLISTA, null)).when(ciclistaService).alterarCiclista(Mockito.any());
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/ciclista")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(obterStringJson(ciclista)))
+            .andExpect(MockMvcResultMatchers.status().isUnprocessableEntity())
+            .andExpect(MockMvcResultMatchers.content().string(ERRO_ALTERAR_CICLISTA))
+            .andDo(MockMvcResultHandlers.print());
     }
 
     private static String obterStringJson(final Object obj) {

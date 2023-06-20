@@ -1,7 +1,8 @@
 package com.api.bicicletario.service;
 
-import com.api.bicicletario.exception.ValidatorException;
 import org.springframework.stereotype.Service;
+
+import static com.api.bicicletario.util.Constantes.ERRO_ENVIAR_EMAIL;
 
 @Service
 public class EmailService {
@@ -12,12 +13,12 @@ public class EmailService {
                     + "Destinatário: " + email + '\n'
                     + "Mensagem: " + mensagem + '\n');
         } catch (Exception e) {
-            throw new ValidatorException("Não foi possível enviar o e-mail");
+            throw new IllegalArgumentException(ERRO_ENVIAR_EMAIL);
         }
     }
 
     public boolean emailValido(String email) {
-        return true;
+        return email != null;
     }
 
 }
