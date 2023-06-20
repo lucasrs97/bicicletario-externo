@@ -96,4 +96,18 @@ public class Tranca {
                 modelo.equals(other.modelo) && status.equals(other.status);
     }
 
+    @Override
+    public int hashCode() {
+        int result = 17;
+        result = 31 * result + id;
+        result = 31 * result + (bicicleta != null ? bicicleta.hashCode() : 0);
+        result = 31 * result + numero;
+        result = 31 * result + (localizacao != null ? localizacao.hashCode() : 0);
+        result = 31 * result + (anoDeFabricacao != null ? anoDeFabricacao.hashCode() : 0);
+        result = 31 * result + (modelo != null ? modelo.hashCode() : 0);
+        result = 31 * result + (status != null ? status.hashCode() : 0);
+        return result;
+    }
+
+
 }
