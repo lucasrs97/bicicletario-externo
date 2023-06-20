@@ -20,9 +20,9 @@ public class CartaoDeCreditoController {
     private CartaoDeCreditoService cartaoDeCreditoService;
 
     @PutMapping("/{idCiclista}")
-    public ResponseEntity<?> alterar(@RequestBody CartaoDeCredito cartaoDeCredito, @PathVariable String idCiclista) {
+    public ResponseEntity<?> alterarCartao(@RequestBody CartaoDeCredito cartaoDeCredito, @PathVariable Long idCiclista) {
         try {
-            this.cartaoDeCreditoService.alterar(cartaoDeCredito, Long.valueOf(idCiclista));
+            this.cartaoDeCreditoService.alterar(cartaoDeCredito, idCiclista);
             return new ResponseEntity<>(DADOS_CARTAO_ALTERADOS_SUCESSO, HttpStatus.OK);
         }  catch (IllegalArgumentException e) {
             return new ResponseEntity<>(ERRO_ALTERAR_DADOS_CARTAO, HttpStatus.UNPROCESSABLE_ENTITY);
