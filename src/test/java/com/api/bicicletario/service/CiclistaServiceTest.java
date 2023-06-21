@@ -14,7 +14,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import static com.api.bicicletario.util.Constantes.MENSAGEM_ATIVACAO_CADASTRO;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
@@ -44,13 +43,8 @@ public class CiclistaServiceTest {
     @InjectMocks
     private CiclistaService ciclistaService;
 
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
-    }
-
     @Test
-    void cadastrarCiclista_DeveLancarExcecao_QuandoCadastrarCiclistaDTOForNulo() {
+    void cadastrarCiclista_quandoadastrarCiclistaDTOForNulo_deveLancarExcecao() {
         when(cadastrarCiclistaDTO.getCiclista()).thenReturn(null);
         when(cadastrarCiclistaDTO.getCartaoDeCredito()).thenReturn(null);
 
@@ -62,7 +56,7 @@ public class CiclistaServiceTest {
     }
 
     @Test
-    void cadastrarCiclista_DeveLancarExcecao_QuandoEmailForInvalido() {
+    void cadastrarCiclista_quandoEmailForInvalido_deveLancarExcecao() {
         when(cadastrarCiclistaDTO.getCiclista()).thenReturn(ciclista);
         when(cadastrarCiclistaDTO.getCartaoDeCredito()).thenReturn(cartaoDeCredito);
         when(emailService.emailValido(ciclista.getEmail())).thenReturn(false);
@@ -76,7 +70,7 @@ public class CiclistaServiceTest {
     }
 
     @Test
-    void cadastrarCiclista_DeveLancarExcecao_QuandoCartaoDeCreditoForInvalido() {
+    void cadastrarCiclista_quandoCartaoDeCreditoForInvalido_deveLancarExcecao() {
         when(cadastrarCiclistaDTO.getCiclista()).thenReturn(ciclista);
         when(cadastrarCiclistaDTO.getCartaoDeCredito()).thenReturn(cartaoDeCredito);
         when(emailService.emailValido(ciclista.getEmail())).thenReturn(true);
