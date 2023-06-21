@@ -22,9 +22,7 @@ public class Tranca {
         this.status = status;
     }
 
-    public Tranca() {
-
-    }
+    public Tranca() {}
 
     public int getId() {
         return id;
