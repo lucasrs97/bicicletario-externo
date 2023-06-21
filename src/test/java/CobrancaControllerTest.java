@@ -11,6 +11,8 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -20,6 +22,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 class CobrancaControllerTest {
+    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+    String data = "31/12/2023";
 
     @Mock
     private CobrancaService cobrancaService;
@@ -33,10 +37,10 @@ class CobrancaControllerTest {
     }
 
     @Test
-    void cobrarTaxasAtrasadas_WithAuthorizedPayment_ShouldReturnSuccessMessage() throws PagamentoNaoAutorizadoException {
+    void cobrarTaxasAtrasadas_WithAuthorizedPayment_ShouldReturnSuccessMessage() throws PagamentoNaoAutorizadoException, ParseException {
         // Arrange
-        Cobranca cobranca1 = new Cobranca(1, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1),50.0, 1, new CartaoDeCredito(123456789L, "João da Silva", "1234 5678 9012 3456", LocalDate.of(2025, 12, 31), "123"));
-        Cobranca cobranca2 = new Cobranca(2, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1),50.0, 2, new CartaoDeCredito(123454564L, "Joana da Silva", "5678 9012 3456 1234", LocalDate.of(2028, 11, 13), "312"));
+        Cobranca cobranca1 = new Cobranca(1, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1),50.0, 1, new CartaoDeCredito(123456789L, "João da Silva", "1234 5678 9012 3456", dateFormat.parse(data), "123"));
+        Cobranca cobranca2 = new Cobranca(2, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1),50.0, 2, new CartaoDeCredito(123454564L, "Joana da Silva", "5678 9012 3456 1234", dateFormat.parse(data), "312"));
         List<Cobranca> cobrancasAtrasadas = new ArrayList<>();
         cobrancasAtrasadas.add(cobranca1);
         cobrancasAtrasadas.add(cobranca2);
@@ -61,9 +65,9 @@ class CobrancaControllerTest {
     }
 
     @Test
-    void cobrarTaxasAtrasadas_WithUnauthorizedPayment_ShouldReturnInternalServerError() throws PagamentoNaoAutorizadoException {
+    void cobrarTaxasAtrasadas_WithUnauthorizedPayment_ShouldReturnInternalServerError() throws PagamentoNaoAutorizadoException, ParseException {
         // Arrange
-        Cobranca cobranca1 = new Cobranca(1, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1),50.0, 3, new CartaoDeCredito(1234566789L, "Jô da Silva", "1234 3345 9012 3456", LocalDate.of(2023, 12, 31), "153"));
+        Cobranca cobranca1 = new Cobranca(1, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1),50.0, 3, new CartaoDeCredito(1234566789L, "Jô da Silva", "1234 3345 9012 3456", dateFormat.parse(data), "153"));
         List<Cobranca> cobrancasAtrasadas = new ArrayList<>();
         cobrancasAtrasadas.add(cobranca1);
 
@@ -82,9 +86,9 @@ class CobrancaControllerTest {
     }
 
     @Test
-    void cobrarTaxasAtrasadas_WithUnauthorizedPayment_ShouldReturnInternalServerError2() throws PagamentoNaoAutorizadoException {
+    void cobrarTaxasAtrasadas_WithUnauthorizedPayment_ShouldReturnInternalServerError2() throws PagamentoNaoAutorizadoException, ParseException {
         // Arrange
-        Cobranca cobranca1 = new Cobranca(1, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1),50.0, 3, new CartaoDeCredito(1234566789L, "Jô da Silva", "1234 3345 9012 3456", LocalDate.of(2023, 12, 31), "153"));
+        Cobranca cobranca1 = new Cobranca(1, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1),50.0, 3, new CartaoDeCredito(1234566789L, "Jô da Silva", "1234 3345 9012 3456", dateFormat.parse(data), "153"));
 
         List<Cobranca> cobrancasAtrasadas = new ArrayList<>();
         cobrancasAtrasadas.add(cobranca1);
@@ -140,9 +144,9 @@ class CobrancaControllerTest {
     }
 
     @Test
-    void cobrarTaxasAtrasadas_WithUnauthorizedPayment_ShouldReturnInternalServerError3() throws PagamentoNaoAutorizadoException {
+    void cobrarTaxasAtrasadas_WithUnauthorizedPayment_ShouldReturnInternalServerError3() throws PagamentoNaoAutorizadoException, ParseException {
         // Arrange
-        Cobranca cobranca1 = new Cobranca(1, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1),50.0, 3, new CartaoDeCredito(1234566789L, "Jô da Silva", "1234 3345 9012 3456", LocalDate.of(2023, 12, 31), "153"));
+        Cobranca cobranca1 = new Cobranca(1, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1),50.0, 3, new CartaoDeCredito(1234566789L, "Jô da Silva", "1234 3345 9012 3456", dateFormat.parse(data), "153"));
 
         List<Cobranca> cobrancasAtrasadas = new ArrayList<>();
         cobrancasAtrasadas.add(cobranca1);

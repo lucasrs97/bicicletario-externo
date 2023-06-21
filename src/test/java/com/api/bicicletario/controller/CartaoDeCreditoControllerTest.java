@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 
 import static com.api.bicicletario.util.Constantes.ERRO_ALTERAR_DADOS_CARTAO;
@@ -27,6 +28,9 @@ import static org.mockito.Mockito.doThrow;
 @AutoConfigureMockMvc
 public class CartaoDeCreditoControllerTest {
 
+    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+    String data = "31/12/2023";
+
     @MockBean
     private CartaoDeCreditoService cartaoDeCreditoService;
 
@@ -35,7 +39,7 @@ public class CartaoDeCreditoControllerTest {
 
     @Test
     void alterarCartao_comDadosValidos_DeveRetornarStatusOk() throws Exception {
-        CartaoDeCredito cartaoDeCredito = new CartaoDeCredito(1234566789L, "Jô da Silva", "1234 3345 9012 3456", LocalDate.of(2023, 12, 31), "153");
+        CartaoDeCredito cartaoDeCredito = new CartaoDeCredito(1234566789L, "Lucas", "1234 3345 9012 3456", dateFormat.parse(data), "153");
         Long idCiclista = 1L;
 
         doNothing().when(cartaoDeCreditoService).alterar(any(CartaoDeCredito.class), any(Long.class));
@@ -48,7 +52,7 @@ public class CartaoDeCreditoControllerTest {
 
     @Test
     void alterarCartao_comDadosInvalidos_deveRetornarStatusUnprocessableEntity() throws Exception {
-        CartaoDeCredito cartaoDeCredito = new CartaoDeCredito(1234566789L, "Jô da Silva", "1234 3345 9012 3456", LocalDate.of(2023, 12, 31), "153");
+        CartaoDeCredito cartaoDeCredito = new CartaoDeCredito(1234566789L, "Lucas", "1234 3345 9012 3456", dateFormat.parse(data), "153");
         Long idCiclista = 1L;
 
         doThrow(new IllegalArgumentException(ERRO_ALTERAR_DADOS_CARTAO)).when(cartaoDeCreditoService).alterar(any(CartaoDeCredito.class), any(Long.class));
