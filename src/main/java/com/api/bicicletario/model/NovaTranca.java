@@ -56,4 +56,6 @@ public class NovaTranca {
     public void setStatus(TrancaStatus status) {
         this.status = status;
     }
+
+
 }

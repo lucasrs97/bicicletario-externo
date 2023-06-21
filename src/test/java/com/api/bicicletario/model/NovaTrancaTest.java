@@ -1,12 +1,9 @@
 package com.api.bicicletario.model;
-
 import com.api.bicicletario.enumerator.TrancaStatus;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
@@ -86,5 +83,60 @@ public class NovaTrancaTest {
         novaTranca.setStatus(novoStatus);
         verify(novaTranca).setStatus(novoStatus);
     }
+
+    @Test
+    public void testConstrutorNovaTranca() {
+        // Dados de entrada do construtor
+        Integer numero = 1;
+        String localizacao = "Sala";
+        String anoDeFabricacao = "2022";
+        String modelo = "ModeloA";
+        TrancaStatus status = TrancaStatus.OCUPADA;
+
+        // Criação da instância usando o construtor
+        NovaTranca tranca = new NovaTranca(numero, localizacao, anoDeFabricacao, modelo, status);
+
+        // Verificações dos atributos da instância criada
+        assertEquals(numero, tranca.getNumero());
+        assertEquals(localizacao, tranca.getLocalizacao());
+        assertEquals(anoDeFabricacao, tranca.getAnoDeFabricacao());
+        assertEquals(modelo, tranca.getModelo());
+        assertEquals(status, tranca.getStatus());
+    }
+
+    @Test
+    public void testGetStatus3() {
+        // Dados de entrada do construtor
+        Integer numero = 1;
+        String localizacao = "Sala";
+        String anoDeFabricacao = "2022";
+        String modelo = "ModeloA";
+        TrancaStatus status = TrancaStatus.OCUPADA;
+
+        // Criação da instância usando o construtor
+        NovaTranca tranca = new NovaTranca(numero, localizacao, anoDeFabricacao, modelo, status);
+
+        // Verificação do método getStatus()
+        assertEquals(status, tranca.getStatus());
+    }
+
+    @Test
+    public void testSetStatus3() {
+        // Dados de entrada do construtor
+        Integer numero = 1;
+        String localizacao = "Sala";
+        String anoDeFabricacao = "2022";
+        String modelo = "ModeloA";
+        TrancaStatus status = TrancaStatus.OCUPADA;
+
+        NovaTranca tranca = new NovaTranca(numero, localizacao, anoDeFabricacao, modelo, status);
+
+        TrancaStatus novoStatus = TrancaStatus.OCUPADA;
+
+        tranca.setStatus(novoStatus);
+
+        assertEquals(novoStatus, tranca.getStatus());
+    }
+
 
 }
