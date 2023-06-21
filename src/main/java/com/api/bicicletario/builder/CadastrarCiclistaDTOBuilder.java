@@ -22,7 +22,7 @@ public class CadastrarCiclistaDTOBuilder {
         ciclista.setEmail("Lucas@gmail.com");
         ciclista.setUrlFotoDocumento("api.foto/img001");
 
-        CartaoDeCredito cartaoDeCredito = new CartaoDeCredito(1234566789L, "Jô da Silva", "1234 3345 9012 3456", LocalDate.of(2023, 12, 31), "153");
+        CartaoDeCredito cartaoDeCredito = new CartaoDeCredito();
         cartaoDeCredito.setNumero("1234-5678-9012-3456");
         cartaoDeCredito.setNomeTitular("Lucas");
         cartaoDeCredito.setCcv("123");
@@ -34,7 +34,7 @@ public class CadastrarCiclistaDTOBuilder {
         try {
             ciclista.setNascimento(dateFormat.parse(dataNascimento));
             ciclista.setPassaporte(new Passaporte("123,", dateFormat.parse(dataValidadePassaporte), "BR"));
-            cartaoDeCredito.setValidade(LocalDate.parse(dataValidadeCartao));
+            cartaoDeCredito.setValidade(dateFormat.parse(dataValidadeCartao));
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
