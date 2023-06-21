@@ -35,19 +35,19 @@ public class CiclistaService {
             throw new IllegalArgumentException(ERRO_CADASTRAR_CICLISTA);
         }
 
-        if(cadastrarCiclistaDTO.getCiclista() == null || cadastrarCiclistaDTO.getCartaoDeCredito() == null) {
+        if(cadastrarCiclistaDTO.getCiclista() == null || cadastrarCiclistaDTO.getMeioDePagamento() == null) {
             throw new IllegalArgumentException(ERRO_CADASTRAR_CICLISTA);
         }
 
         Ciclista ciclista = cadastrarCiclistaDTO.getCiclista();
-        CartaoDeCredito cartaoDeCredito = cadastrarCiclistaDTO.getCartaoDeCredito();
+        CartaoDeCredito cartaoDeCredito = cadastrarCiclistaDTO.getMeioDePagamento();
 
         // [A1] Email já cadastrado ou inválido
         if(!emailService.emailValido(ciclista.getEmail())) {
             throw new IllegalArgumentException(ERRO_CADASTRAR_CICLISTA);
         }
         // [A3] Cartão reprovado
-        if(!cartaoDeCreditoService.cartaoDeCreditoInvalido(cartaoDeCredito)) {
+        if(cartaoDeCreditoService.cartaoDeCreditoInvalido(cartaoDeCredito)) {
             throw new IllegalArgumentException(ERRO_CADASTRAR_CICLISTA);
         }
         // [A2] Dados inválidos

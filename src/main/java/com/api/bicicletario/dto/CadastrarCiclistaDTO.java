@@ -7,5 +7,5 @@ import lombok.Data;
 @Data
 public class CadastrarCiclistaDTO {
     private Ciclista ciclista;
-    private CartaoDeCredito cartaoDeCredito;
+    private CartaoDeCredito meioDePagamento;
 }

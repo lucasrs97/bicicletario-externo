@@ -39,7 +39,7 @@ public class CadastrarCiclistaDTOBuilder {
         }
 
         cadastro.setCiclista(ciclista);
-        cadastro.setCartaoDeCredito(cartaoDeCredito);
+        cadastro.setMeioDePagamento(cartaoDeCredito);
 
         return cadastro;
     }

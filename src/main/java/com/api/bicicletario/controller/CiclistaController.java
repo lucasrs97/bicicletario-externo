@@ -34,8 +34,7 @@ public class CiclistaController {
         }
     }
 
-
-    @RequestMapping(method = RequestMethod.POST, value = "/{idCiclista}/ativar", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(method = RequestMethod.POST, value = "/{idCiclista}/ativar", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> confirmarEmail(@PathVariable Long idCiclista) {
         try {
             this.ciclistaService.ativarCiclista(idCiclista);
@@ -55,7 +54,7 @@ public class CiclistaController {
         }
     }
 
-    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(method = RequestMethod.GET, value = "/{idCiclista}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> recuperar(@PathVariable Long idCiclista) {
         try {
             Ciclista ciclista = this.ciclistaService.recuperarCiclista(idCiclista);
