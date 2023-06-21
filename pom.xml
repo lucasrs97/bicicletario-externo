@@ -15,7 +15,7 @@
 	<description>Echo Project</description>
 
 	<properties>
-		<sonar.organization>guilhermemenez</sonar.organization>
+		<sonar.organization>pm20231</sonar.organization>
 	</properties>
 
 	<dependencies>
