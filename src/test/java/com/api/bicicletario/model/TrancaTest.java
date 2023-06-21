@@ -5,6 +5,7 @@ import com.api.bicicletario.enumerator.TrancaStatus;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 
 
 public class TrancaTest {
@@ -229,5 +230,51 @@ public class TrancaTest {
         TrancaStatus status = TrancaStatus.LIVRE;
         tranca.setStatus(status);
         Assert.assertEquals(status, tranca.getStatus());
+
+
     }
+    @Test
+    public void testConstructor() {
+        Assertions.assertEquals(1, tranca.getId());
+        Assertions.assertEquals("Bicicleta1", tranca.getBicicleta());
+        Assertions.assertEquals(123, tranca.getNumero());
+        Assertions.assertEquals("Local1", tranca.getLocalizacao());
+        Assertions.assertEquals("2021", tranca.getAnoDeFabricacao());
+        Assertions.assertEquals("Modelo1", tranca.getModelo());
+        Assertions.assertEquals(TrancaStatus.LIVRE, tranca.getStatus());
+    }
+
+    @Test
+    public void testDefaultConstructor() {
+        Tranca defaultTranca = new Tranca();
+        Assertions.assertNull(defaultTranca.getBicicleta());
+        Assertions.assertEquals(0, defaultTranca.getId());
+
+    }
+
+    @Test
+    public void testSetters() {
+        tranca.setId(2);
+        Assertions.assertEquals(2, tranca.getId());
+
+        tranca.setBicicleta("Bicicleta2");
+        Assertions.assertEquals("Bicicleta2", tranca.getBicicleta());
+
+        tranca.setNumero(456);
+        Assertions.assertEquals(456, tranca.getNumero());
+
+        tranca.setLocalizacao("Local2");
+        Assertions.assertEquals("Local2", tranca.getLocalizacao());
+
+        tranca.setAnoDeFabricacao("2021");
+        Assertions.assertEquals("2021", tranca.getAnoDeFabricacao());
+
+        tranca.setModelo("Modelo2");
+        Assertions.assertEquals("Modelo2", tranca.getModelo());
+
+        tranca.setStatus(TrancaStatus.LIVRE);
+        Assertions.assertEquals(TrancaStatus.LIVRE, tranca.getStatus());
+    }
+
+
 }
