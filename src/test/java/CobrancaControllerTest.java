@@ -1,6 +1,5 @@
 import com.api.bicicletario.controller.CobrancaController;
 import com.api.bicicletario.exception.PagamentoNaoAutorizadoException;
-import com.api.bicicletario.model.CartaoDeCredito;
 import com.api.bicicletario.model.Cobranca;
 import com.api.bicicletario.service.CobrancaService;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;

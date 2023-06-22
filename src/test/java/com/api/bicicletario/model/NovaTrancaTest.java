@@ -1,5 +1,4 @@
 package com.api.bicicletario.model;
-import com.api.bicicletario.enumerator.TrancaStatus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;

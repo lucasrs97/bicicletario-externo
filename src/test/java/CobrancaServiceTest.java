@@ -1,5 +1,4 @@
 import com.api.bicicletario.exception.PagamentoNaoAutorizadoException;
-import com.api.bicicletario.model.CartaoDeCredito;
 import com.api.bicicletario.model.Cobranca;
 import com.api.bicicletario.service.CobrancaService;
 import com.api.bicicletario.service.NotificacaoService;
@@ -11,7 +10,6 @@ import org.mockito.MockitoAnnotations;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;

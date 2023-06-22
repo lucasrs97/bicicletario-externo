@@ -1,8 +1,5 @@
 package com.api.bicicletario.model;
 
-import com.api.bicicletario.enumerator.CiclistaStatus;
-import com.api.bicicletario.enumerator.Nacionalidade;
-import com.api.bicicletario.vo.Passaporte;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;

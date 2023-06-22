@@ -1,7 +1,5 @@
 package com.api.bicicletario.service;
 
-import com.api.bicicletario.enumerator.TrancaStatus;
-import com.api.bicicletario.model.Tranca;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

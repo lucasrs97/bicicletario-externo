@@ -1,7 +1,4 @@
 package com.api.bicicletario.controller;
-import com.api.bicicletario.enumerator.TrancaStatus;
-import com.api.bicicletario.model.Tranca;
-import com.api.bicicletario.service.TrancaService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

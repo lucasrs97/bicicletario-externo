@@ -1,9 +1,5 @@
 package com.api.bicicletario.controller;
 
-import com.api.bicicletario.builder.CadastrarCiclistaDTOBuilder;
-import com.api.bicicletario.dto.CadastrarCiclistaDTO;
-import com.api.bicicletario.model.Ciclista;
-import com.api.bicicletario.service.CiclistaService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 

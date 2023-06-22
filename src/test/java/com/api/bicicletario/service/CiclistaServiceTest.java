@@ -1,9 +1,5 @@
 package com.api.bicicletario.service;
 
-import com.api.bicicletario.dao.CiclistaDAO;
-import com.api.bicicletario.dto.CadastrarCiclistaDTO;
-import com.api.bicicletario.model.CartaoDeCredito;
-import com.api.bicicletario.model.Ciclista;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

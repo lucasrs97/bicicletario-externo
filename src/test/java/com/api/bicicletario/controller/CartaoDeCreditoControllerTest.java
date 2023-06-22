@@ -1,7 +1,5 @@
 package com.api.bicicletario.controller;
 
-import com.api.bicicletario.model.CartaoDeCredito;
-import com.api.bicicletario.service.CartaoDeCreditoService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,7 +14,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 
 import static com.api.bicicletario.util.Constantes.ERRO_ALTERAR_DADOS_CARTAO;
 import static org.mockito.ArgumentMatchers.any;
