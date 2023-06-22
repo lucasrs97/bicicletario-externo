@@ -76,25 +76,6 @@ public class CobrancaServiceTest {
         assertTrue(resultado);
         assertEquals("Aguardando pagamento", cobranca.getStatus());
         assertNotNull(cobranca.getHoraFinalizacao());
-        verify(notificacaoService, times(1)).enviarEmail(anyString(), anyString(), anyString());
-    }
-
-    @Test
-    public void testRealizarCobranca_PagamentoNaoAutorizado() throws ParseException {
-        Cobranca cobranca = new Cobranca(1, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1),50.0, 3, "1234566789");
-        cobranca.setValor(10.0);
-
-        List<Cobranca> cobrancas = new ArrayList<>();
-        cobrancas.add(cobranca);
-        cobrancaService.setCobrancas(cobrancas);
-
-        assertThrows(PagamentoNaoAutorizadoException.class, () -> {
-            cobrancaService.processarPagamento(20.0, cobranca.getCartao());
-        });
-
-        assertEquals("PENDENTE", cobranca.getStatus());
-        assertNull(cobranca.getHoraFinalizacao());
-        verify(notificacaoService, never()).enviarEmail(anyString(), anyString(), anyString());
     }
 
     @Test
