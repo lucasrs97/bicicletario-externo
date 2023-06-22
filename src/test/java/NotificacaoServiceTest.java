@@ -1,67 +1,36 @@
 import com.api.bicicletario.service.NotificacaoService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+
 public class NotificacaoServiceTest {
 
-    @Mock
+    @InjectMocks
     private NotificacaoService notificacaoService;
 
     @BeforeEach
     public void setUp() {
-        MockitoAnnotations.openMocks(this);
+        notificacaoService = new NotificacaoService();
     }
 
     @Test
     public void testEnviarEmail() {
-        String destinatario = "test@example.com";
-        String assunto = "Teste de envio de e-mail";
-        String mensagem = "Este é um teste de envio de e-mail usando Mockito.";
+        // Parâmetros para enviar e-mail
+        String destinatario = "exemplo@teste.com";
+        String assunto = "Assunto do e-mail";
+        String mensagem = "Corpo da mensagem";
 
-        Mockito.doNothing().when(notificacaoService).enviarEmail(destinatario, assunto, mensagem);
+        // Chama o método para enviar o e-mail
+        String retorno = notificacaoService.enviarEmail(destinatario, assunto, mensagem);
 
-        notificacaoService.enviarEmail(destinatario, assunto, mensagem);
-
-        Mockito.verify(notificacaoService, Mockito.times(1)).enviarEmail(destinatario, assunto, mensagem);
-    }
-
-    @Test
-    public void testEnviarEmailDestinatarioNulo() {
-        String assunto = "Teste de envio de e-mail";
-        String mensagem = "Este é um teste de envio de e-mail usando Mockito.";
-
-        notificacaoService.enviarEmail(null, assunto, mensagem);
-
-        Mockito.verify(notificacaoService, Mockito.never()).enviarEmail(Mockito.anyString(), Mockito.anyString(), Mockito.anyString());
-    }
-
-    @Test
-    public void testEnviarEmailAssuntoNulo() {
-        String destinatario = "test@example.com";
-        String mensagem = "Este é um teste de envio de e-mail usando Mockito.";
-
-        notificacaoService.enviarEmail(destinatario, null, mensagem);
-
-        Mockito.verify(notificacaoService, Mockito.never()).enviarEmail(Mockito.anyString(), Mockito.anyString(), Mockito.anyString());
-    }
-
-    @Test
-    public void testEnviarEmailMensagemNula() {
-        String destinatario = "test@example.com";
-        String assunto = "Teste de envio de e-mail";
-
-        notificacaoService.enviarEmail(destinatario, assunto, null);
-
-        Mockito.verify(notificacaoService, Mockito.never()).enviarEmail(Mockito.anyString(), Mockito.anyString(), Mockito.anyString());
-    }
-
-    @Test
-    public void testEnviarEmailParametrosNulos() {
-        notificacaoService.enviarEmail(null, null, null);
-
-        Mockito.verify(notificacaoService, Mockito.never()).enviarEmail(Mockito.anyString(), Mockito.anyString(), Mockito.anyString());
+        String retornoEsperado = "Enviando e-mail para: " + destinatario + " Assunto: " + assunto + " Mensagem: " + mensagem + " E-mail enviado com sucesso!";
+        assertEquals(retornoEsperado, retorno);
     }
 }

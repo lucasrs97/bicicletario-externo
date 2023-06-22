@@ -60,7 +60,7 @@ public class CobrancaServiceTest {
         assertEquals(cobrancaAtrasada, cobrancasAtrasadas.get(0));
     }
 
-//    @Test
+    @Test
     public void testRealizarCobranca_PagamentoAutorizado() throws PagamentoNaoAutorizadoException, ParseException {
         Cobranca cobranca = null;
         cobranca = new Cobranca(1, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1),50.0, 3, "1234566789");
@@ -79,7 +79,7 @@ public class CobrancaServiceTest {
         verify(notificacaoService, times(1)).enviarEmail(anyString(), anyString(), anyString());
     }
 
-//    @Test
+    @Test
     public void testRealizarCobranca_PagamentoNaoAutorizado() throws ParseException {
         Cobranca cobranca = new Cobranca(1, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1),50.0, 3, "1234566789");
         cobranca.setValor(10.0);
