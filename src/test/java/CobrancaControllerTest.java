@@ -34,7 +34,7 @@ class CobrancaControllerTest {
     }
 
     @Test
-    void cobrarTaxasAtrasadasPagamentoAutorizadoSucesso() throws PagamentoNaoAutorizadoException {
+    void taxasAtrasadasPagamentoAutorizadoSucesso() throws PagamentoNaoAutorizadoException {
         Cobranca cobranca1 = new Cobranca(1, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1),50.0, 1, "1234566789");
         Cobranca cobranca2 = new Cobranca(2, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1),50.0, 2, "1234566789");
         List<Cobranca> cobrancasAtrasadas = new ArrayList<>();
@@ -60,25 +60,7 @@ class CobrancaControllerTest {
     }
 
     @Test
-    void cobrarTaxasAtrasadasPagamentoNaoAutorizadoInternalServerError() throws PagamentoNaoAutorizadoException {
-        Cobranca cobranca1 = new Cobranca(1, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1),50.0, 3, "1234566789");
-        List<Cobranca> cobrancasAtrasadas = new ArrayList<>();
-        cobrancasAtrasadas.add(cobranca1);
-
-        when(cobrancaService.obterCobrancasAtrasadas()).thenReturn(cobrancasAtrasadas);
-        doThrow(new PagamentoNaoAutorizadoException("Erro. Pagamento não autorizado")).when(cobrancaService).realizarCobranca(cobranca1);
-
-        ResponseEntity<String> response = cobrancaController.cobrarTaxasAtrasadas();
-
-        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
-        assertEquals("Erro ao processar pagamento.", response.getBody());
-        verify(cobrancaService, times(1)).obterCobrancasAtrasadas();
-        verify(cobrancaService, times(1)).realizarCobranca(cobranca1);
-        verify(cobrancaService, never()).enviarNotificacao(cobranca1);
-    }
-
-    @Test
-    void cobrarTaxasAtrasadasPagamentoNaoAutorizadoInternalServerError2() throws PagamentoNaoAutorizadoException {
+    void taxasAtrasadasPagamentoNaoAutorizadoInternalServerError() throws PagamentoNaoAutorizadoException {
         Cobranca cobranca1 = new Cobranca(1, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1),50.0, 3, "1234566789");
 
         List<Cobranca> cobrancasAtrasadas = new ArrayList<>();
@@ -95,6 +77,25 @@ class CobrancaControllerTest {
         verify(cobrancaService, times(1)).realizarCobranca(cobranca1);
         verify(cobrancaService, never()).enviarNotificacao(cobranca1);
     }
+
+//    @Test
+//    void taxasAtrasadasPagamentoNaoAutorizadoInternalServerError2() throws PagamentoNaoAutorizadoException {
+//        Cobranca cobranca1 = new Cobranca(1, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1),50.0, 3, "1234566789");
+//
+//        List<Cobranca> cobrancasAtrasadas = new ArrayList<>();
+//        cobrancasAtrasadas.add(cobranca1);
+//
+//        when(cobrancaService.obterCobrancasAtrasadas()).thenReturn(cobrancasAtrasadas);
+//        doThrow(new PagamentoNaoAutorizadoException("Erro. Pagamento não autorizado")).when(cobrancaService).realizarCobranca(cobranca1);
+//
+//        ResponseEntity<String> response = cobrancaController.cobrarTaxasAtrasadas();
+//
+//        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+//        assertEquals("Erro ao processar pagamento.", response.getBody());
+//        verify(cobrancaService, times(1)).obterCobrancasAtrasadas();
+//        verify(cobrancaService, times(1)).realizarCobranca(cobranca1);
+//        verify(cobrancaService, never()).enviarNotificacao(cobranca1);
+//    }
 
     @Test
     void cobrarTaxasAtrasadasSemPagamentosAtrasadosSucesso() throws PagamentoNaoAutorizadoException {
@@ -112,7 +113,7 @@ class CobrancaControllerTest {
     }
 
     @Test
-    void cobrarTaxasAtrasadasSemPagamentosAtrasadosSucesso2() throws PagamentoNaoAutorizadoException {
+    void taxasAtrasadasSemPagamentosAtrasadosNaoCobrancaNaoEmail() throws PagamentoNaoAutorizadoException {
         List<Cobranca> cobrancasAtrasadas = new ArrayList<>();
 
         when(cobrancaService.obterCobrancasAtrasadas()).thenReturn(cobrancasAtrasadas);
@@ -127,7 +128,9 @@ class CobrancaControllerTest {
     }
 
     @Test
-    void cobrarTaxasAtrasadasPagamentoNaoAutorizadoDeveInternalServerError3() throws PagamentoNaoAutorizadoException {
+    void taxasAtrasadasPagamentoNaoAutorizadoNaoEnviarEmail() throws PagamentoNaoAutorizadoException {
+        //nao deve enviar email
+
         Cobranca cobranca1 = new Cobranca(1, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1),50.0, 3, "1234566789");
 
         List<Cobranca> cobrancasAtrasadas = new ArrayList<>();
@@ -159,7 +162,7 @@ class CobrancaControllerTest {
     }
 
     @Test
-    void cobrarTaxasAtrasadasSemPagamentosAtrasadosSucesso4() throws PagamentoNaoAutorizadoException {
+    void taxasAtrasadasSemPagamentosAtrasadosEnviarCobranca() throws PagamentoNaoAutorizadoException {
         List<Cobranca> cobrancasAtrasadas = new ArrayList<>();
 
         when(cobrancaService.obterCobrancasAtrasadas()).thenReturn(cobrancasAtrasadas);
