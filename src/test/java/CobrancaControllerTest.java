@@ -98,7 +98,7 @@ class CobrancaControllerTest {
 //    }
 
     @Test
-    void cobrarTaxasAtrasadasSemPagamentosAtrasadosSucesso() throws PagamentoNaoAutorizadoException {
+    void taxasAtrasadasSemPagamentosAtrasadosSucesso() throws PagamentoNaoAutorizadoException {
         List<Cobranca> cobrancasAtrasadas = new ArrayList<>();
 
         when(cobrancaService.obterCobrancasAtrasadas()).thenReturn(cobrancasAtrasadas);
@@ -149,7 +149,7 @@ class CobrancaControllerTest {
     }
 
     @Test
-    void cobrarTaxasAtrasadasListaDePagamentosAtrasadosVaziaSucesso() throws PagamentoNaoAutorizadoException {
+    void taxasAtrasadasListaDePagamentosAtrasadosVaziaSucesso() throws PagamentoNaoAutorizadoException {
         when(cobrancaService.obterCobrancasAtrasadas()).thenReturn(new ArrayList<>());
 
         ResponseEntity<String> response = cobrancaController.cobrarTaxasAtrasadas();

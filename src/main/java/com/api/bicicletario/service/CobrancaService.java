@@ -56,10 +56,12 @@ public class CobrancaService {
     public boolean processarPagamento(double valor, String cartao) {
         String resultado = "Processando pagamento...\n" + "Valor: " + valor + "\nCartão: " + cartao + "\nPagamento autorizado!";
 
-        boolean pagamentoAutorizado = true;
+        exibirResultado(resultado);
+        return true;
+    }
 
+    private void exibirResultado(String resultado) {
         System.out.println(resultado);
-        return pagamentoAutorizado;
     }
 
 
