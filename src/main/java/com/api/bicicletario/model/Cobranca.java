@@ -1,5 +1,6 @@
 package com.api.bicicletario.model;
 
+
 import java.time.LocalDateTime;
 
 public class Cobranca {
