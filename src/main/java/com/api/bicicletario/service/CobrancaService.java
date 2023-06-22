@@ -2,6 +2,7 @@ package com.api.bicicletario.service;
 
 import com.api.bicicletario.exception.PagamentoNaoAutorizadoException;
 import com.api.bicicletario.model.Cobranca;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+
+@Slf4j
 public class CobrancaService {
 
     private List<Cobranca> cobrancas; // Lista simulada de cobranças
@@ -56,14 +59,10 @@ public class CobrancaService {
     public boolean processarPagamento(double valor, String cartao) {
         String resultado = "Processando pagamento...\n" + "Valor: " + valor + "\nCartão: " + cartao + "\nPagamento autorizado!";
 
-        exibirResultado(resultado);
+        log.info(resultado);
+
         return true;
     }
-
-    private void exibirResultado(String resultado) {
-        System.out.println(resultado);
-    }
-
 
     protected String criarMensagemNotificacao(Cobranca cobranca) {
         return "Caro(a) Ciclista " + cobranca.getCiclista() + ",\n\n" +
