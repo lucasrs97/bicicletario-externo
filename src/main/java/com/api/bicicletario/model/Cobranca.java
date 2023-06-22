@@ -9,9 +9,9 @@ public class Cobranca {
     private LocalDateTime horaFinalizacao;
     private double valor;
     private Integer ciclista;
-    private CartaoDeCredito cartao;
+    private String cartao;
 
-    public Cobranca(Integer id, String status, LocalDateTime horaSolicitacao, LocalDateTime horaFinalizacao, double valor, Integer ciclista, CartaoDeCredito cartao) {
+    public Cobranca(Integer id, String status, LocalDateTime horaSolicitacao, LocalDateTime horaFinalizacao, double valor, Integer ciclista, String cartao) {
         this.id = id;
         this.status = status;
         this.horaSolicitacao = horaSolicitacao;
@@ -70,10 +70,10 @@ public class Cobranca {
     }
 
     public String getCartao() {
-        return cartao.getNumero();
+        return cartao;
     }
 
-    public void setCartao(CartaoDeCredito cartao) {
+    public void setCartao(String cartao) {
         this.cartao = cartao;
     }
 }

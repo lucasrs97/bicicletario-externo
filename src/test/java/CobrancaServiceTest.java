@@ -37,12 +37,12 @@ public class CobrancaServiceTest {
     public void testObterCobrancasAtrasadas() throws ParseException {
         // Criação de cobranças simuladas
         Cobranca cobrancaAtrasada = null;
-        cobrancaAtrasada = new Cobranca(1, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1),50.0, 3, new CartaoDeCredito(1234566789L, "Jô da Silva", "1234 3345 9012 3456", dateFormat.parse(data), "153"));
+        cobrancaAtrasada = new Cobranca(1, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1),50.0, 3, "1234566789");
         cobrancaAtrasada.setStatus("PENDENTE");
         cobrancaAtrasada.setHoraSolicitacao(LocalDateTime.now().minusHours(13));
 
         Cobranca cobrancaNaoAtrasada = null;
-        cobrancaNaoAtrasada = new Cobranca(2, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1),50.0, 2, new CartaoDeCredito(123454564L, "Joana da Silva", "5678 9012 3456 1234", dateFormat.parse(data), "312"));
+        cobrancaNaoAtrasada = new Cobranca(2, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1),50.0, 2, "1234566789");
         cobrancaNaoAtrasada.setStatus("PENDENTE");
         cobrancaNaoAtrasada.setHoraSolicitacao(LocalDateTime.now().minusHours(2));
 
@@ -63,9 +63,9 @@ public class CobrancaServiceTest {
 //    @Test
     public void testRealizarCobranca_PagamentoAutorizado() throws PagamentoNaoAutorizadoException, ParseException {
         Cobranca cobranca = null;
-        cobranca = new Cobranca(1, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1),50.0, 3, new CartaoDeCredito(1234566789L, "Jô da Silva", "1234 3345 9012 3456", dateFormat.parse(data), "153"));
+        cobranca = new Cobranca(1, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1),50.0, 3, "1234566789");
         cobranca.setValor(10.0);
-        cobranca.setCartao(new CartaoDeCredito(1234566789L, "Jô da Silva", "1234 3345 9012 3456", dateFormat.parse(data), "153"));
+        cobranca.setCartao("1234566789");
 
         List<Cobranca> cobrancas = new ArrayList<>();
         cobrancas.add(cobranca);
@@ -81,7 +81,7 @@ public class CobrancaServiceTest {
 
 //    @Test
     public void testRealizarCobranca_PagamentoNaoAutorizado() throws ParseException {
-        Cobranca cobranca = new Cobranca(1, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1),50.0, 3, new CartaoDeCredito(1234566789L, "Jô da Silva", "1234 3345 9012 3456", dateFormat.parse(data), "153"));
+        Cobranca cobranca = new Cobranca(1, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1),50.0, 3, "1234566789");
         cobranca.setValor(10.0);
 
         List<Cobranca> cobrancas = new ArrayList<>();
@@ -99,7 +99,7 @@ public class CobrancaServiceTest {
 
     @Test
     public void testEnviarNotificacao() throws ParseException {
-        Cobranca cobranca = new Cobranca(1, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1),50.0, 3, new CartaoDeCredito(1234566789L, "Jô da Silva", "1234 3345 9012 3456", dateFormat.parse(data), "153"));
+        Cobranca cobranca = new Cobranca(1, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1),50.0, 3, "1234566789");
         cobranca.setCiclista(1);
         cobranca.setHoraSolicitacao(LocalDateTime.now());
         cobranca.setValor(50.0);

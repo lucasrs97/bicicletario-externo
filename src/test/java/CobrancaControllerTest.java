@@ -37,8 +37,8 @@ class CobrancaControllerTest {
     @Test
     void cobrarTaxasAtrasadas_WithAuthorizedPayment_ShouldReturnSuccessMessage() throws PagamentoNaoAutorizadoException, ParseException {
         // Arrange
-        Cobranca cobranca1 = new Cobranca(1, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1),50.0, 1, new CartaoDeCredito(123456789L, "João da Silva", "1234 5678 9012 3456", dateFormat.parse(data), "123"));
-        Cobranca cobranca2 = new Cobranca(2, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1),50.0, 2, new CartaoDeCredito(123454564L, "Joana da Silva", "5678 9012 3456 1234", dateFormat.parse(data), "312"));
+        Cobranca cobranca1 = new Cobranca(1, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1),50.0, 1, "1234566789");
+        Cobranca cobranca2 = new Cobranca(2, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1),50.0, 2, "1234566789");
         List<Cobranca> cobrancasAtrasadas = new ArrayList<>();
         cobrancasAtrasadas.add(cobranca1);
         cobrancasAtrasadas.add(cobranca2);
@@ -65,7 +65,7 @@ class CobrancaControllerTest {
     @Test
     void cobrarTaxasAtrasadas_WithUnauthorizedPayment_ShouldReturnInternalServerError() throws PagamentoNaoAutorizadoException, ParseException {
         // Arrange
-        Cobranca cobranca1 = new Cobranca(1, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1),50.0, 3, new CartaoDeCredito(1234566789L, "Jô da Silva", "1234 3345 9012 3456", dateFormat.parse(data), "153"));
+        Cobranca cobranca1 = new Cobranca(1, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1),50.0, 3, "1234566789");
         List<Cobranca> cobrancasAtrasadas = new ArrayList<>();
         cobrancasAtrasadas.add(cobranca1);
 
@@ -86,7 +86,7 @@ class CobrancaControllerTest {
     @Test
     void cobrarTaxasAtrasadas_WithUnauthorizedPayment_ShouldReturnInternalServerError2() throws PagamentoNaoAutorizadoException, ParseException {
         // Arrange
-        Cobranca cobranca1 = new Cobranca(1, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1),50.0, 3, new CartaoDeCredito(1234566789L, "Jô da Silva", "1234 3345 9012 3456", dateFormat.parse(data), "153"));
+        Cobranca cobranca1 = new Cobranca(1, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1),50.0, 3, "1234566789");
 
         List<Cobranca> cobrancasAtrasadas = new ArrayList<>();
         cobrancasAtrasadas.add(cobranca1);
@@ -144,7 +144,7 @@ class CobrancaControllerTest {
     @Test
     void cobrarTaxasAtrasadas_WithUnauthorizedPayment_ShouldReturnInternalServerError3() throws PagamentoNaoAutorizadoException, ParseException {
         // Arrange
-        Cobranca cobranca1 = new Cobranca(1, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1),50.0, 3, new CartaoDeCredito(1234566789L, "Jô da Silva", "1234 3345 9012 3456", dateFormat.parse(data), "153"));
+        Cobranca cobranca1 = new Cobranca(1, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1),50.0, 3, "1234566789");
 
         List<Cobranca> cobrancasAtrasadas = new ArrayList<>();
         cobrancasAtrasadas.add(cobranca1);
