@@ -22,6 +22,9 @@ public class Cobranca {
         this.cartao = cartao;
     }
 
+    public Cobranca() {
+    }
+
     public Integer getId() {
         return id;
     }

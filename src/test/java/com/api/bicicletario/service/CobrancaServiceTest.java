@@ -2,8 +2,6 @@ package com.api.bicicletario.service;
 
 import com.api.bicicletario.exception.PagamentoNaoAutorizadoException;
 import com.api.bicicletario.model.Cobranca;
-import com.api.bicicletario.service.CobrancaService;
-import com.api.bicicletario.service.NotificacaoService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

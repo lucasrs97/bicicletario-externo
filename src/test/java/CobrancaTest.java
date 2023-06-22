@@ -13,10 +13,12 @@ class CobrancaTest {
 
     @Mock
     private Cobranca cobranca;
+    private Cobranca cobranca2;
 
     @BeforeEach
     void setup() {
         MockitoAnnotations.openMocks(this);
+        cobranca2 = new Cobranca();
     }
 
     @Test
@@ -61,15 +63,20 @@ class CobrancaTest {
         String cartao = "1234567890";
 
         // Set the values using setters
-        cobranca.setId(id);
-        cobranca.setStatus(status);
-        cobranca.setHoraSolicitacao(horaSolicitacao);
-        cobranca.setHoraFinalizacao(horaFinalizacao);
-        cobranca.setValor(valor);
-        cobranca.setCiclista(ciclista);
-        cobranca.setCartao(cartao);
+        cobranca2.setId(id);
+        cobranca2.setStatus(status);
+        cobranca2.setHoraSolicitacao(horaSolicitacao);
+        cobranca2.setHoraFinalizacao(horaFinalizacao);
+        cobranca2.setValor(valor);
+        cobranca2.setCiclista(ciclista);
+        cobranca2.setCartao(cartao);
 
         // Verify the results
-        Assertions.assertEquals(id, cobranca.getId());
+        Assertions.assertEquals(id, cobranca2.getId());
+        Assertions.assertEquals(horaSolicitacao, cobranca2.getHoraSolicitacao());
+        Assertions.assertEquals(horaFinalizacao, cobranca2.getHoraFinalizacao());
+        Assertions.assertEquals(valor, cobranca2.getValor());
+        Assertions.assertEquals(ciclista, cobranca2.getCiclista());
+        Assertions.assertEquals(cartao, cobranca2.getCartao());
     }
 }
