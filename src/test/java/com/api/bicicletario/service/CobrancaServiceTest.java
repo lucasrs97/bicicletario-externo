@@ -1,3 +1,5 @@
+package com.api.bicicletario.service;
+
 import com.api.bicicletario.exception.PagamentoNaoAutorizadoException;
 import com.api.bicicletario.model.Cobranca;
 import com.api.bicicletario.service.CobrancaService;
@@ -96,5 +98,25 @@ public class CobrancaServiceTest {
         String cartao = "1234567890";
 
         assertTrue(cobrancaService.processarPagamento(valor, cartao));
+    }
+    @Test
+    public void testCriarMensagemNotificacao() {
+        // Cria uma cobrança para teste
+        Cobranca cobranca = new Cobranca(1, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1),50.0, 3, "1234566789");
+        cobranca.setCiclista(1);
+        cobranca.setHoraSolicitacao(LocalDateTime.now());
+        cobranca.setValor(100.0);
+
+        // Chama o método para criar a mensagem de notificação
+        String mensagem = cobrancaService.criarMensagemNotificacao(cobranca);
+
+        // Verifica se a mensagem foi criada corretamente
+        String mensagemEsperada = "Caro(a) Ciclista " + cobranca.getCiclista() + ",\n\n" +
+                "De acordo com nossos registros, identificamos uma cobrança em atraso para a devolução da bicicleta.\n" +
+                "Data da cobrança: " + cobranca.getHoraSolicitacao() + "\n" +
+                "Valor da cobrança: " + cobranca.getValor() + "\n\n" +
+                "Atenciosamente,\n" +
+                "Equipe do sistema de aluguel de bicicletas";
+        assertEquals(mensagemEsperada, mensagem);
     }
 }

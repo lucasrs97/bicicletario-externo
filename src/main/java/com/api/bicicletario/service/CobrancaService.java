@@ -63,7 +63,7 @@ public class CobrancaService {
     }
 
 
-    private String criarMensagemNotificacao(Cobranca cobranca) {
+    protected String criarMensagemNotificacao(Cobranca cobranca) {
         return "Caro(a) Ciclista " + cobranca.getCiclista() + ",\n\n" +
                 "De acordo com nossos registros, identificamos uma cobrança em atraso para a devolução da bicicleta.\n" +
                 "Data da cobrança: " + cobranca.getHoraSolicitacao() + "\n" +
