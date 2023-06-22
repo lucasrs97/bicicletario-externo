@@ -29,27 +29,24 @@ public class CobrancaServiceTest {
 
     @Test
     public void testObterCobrancasAtrasadas() {
-        // Criação de cobranças simuladas
         Cobranca cobrancaAtrasada = null;
-        cobrancaAtrasada = new Cobranca(1, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1),50.0, 3, "1234566789");
+        cobrancaAtrasada = new Cobranca();
         cobrancaAtrasada.setStatus("PENDENTE");
         cobrancaAtrasada.setHoraSolicitacao(LocalDateTime.now().minusHours(13));
 
         Cobranca cobrancaNaoAtrasada = null;
-        cobrancaNaoAtrasada = new Cobranca(2, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1),50.0, 2, "1234566789");
+        cobrancaNaoAtrasada = new Cobranca();
         cobrancaNaoAtrasada.setStatus("PENDENTE");
         cobrancaNaoAtrasada.setHoraSolicitacao(LocalDateTime.now().minusHours(2));
 
-        // Adição das cobranças à lista simulada
+
         List<Cobranca> cobrancas = new ArrayList<>();
         cobrancas.add(cobrancaAtrasada);
         cobrancas.add(cobrancaNaoAtrasada);
         cobrancaService.setCobrancas(cobrancas);
 
-        // Chamada do método a ser testado
         List<Cobranca> cobrancasAtrasadas = cobrancaService.obterCobrancasAtrasadas();
 
-        // Verificação do resultado
         assertEquals(1, cobrancasAtrasadas.size());
         assertEquals(cobrancaAtrasada, cobrancasAtrasadas.get(0));
     }
@@ -93,16 +90,13 @@ public class CobrancaServiceTest {
     }
     @Test
     public void testCriarMensagemNotificacao() {
-        // Cria uma cobrança para teste
         Cobranca cobranca = new Cobranca(1, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1),50.0, 3, "1234566789");
         cobranca.setCiclista(1);
         cobranca.setHoraSolicitacao(LocalDateTime.now());
         cobranca.setValor(100.0);
 
-        // Chama o método para criar a mensagem de notificação
         String mensagem = cobrancaService.criarMensagemNotificacao(cobranca);
 
-        // Verifica se a mensagem foi criada corretamente
         String mensagemEsperada = "Caro(a) Ciclista " + cobranca.getCiclista() + ",\n\n" +
                 "De acordo com nossos registros, identificamos uma cobrança em atraso para a devolução da bicicleta.\n" +
                 "Data da cobrança: " + cobranca.getHoraSolicitacao() + "\n" +

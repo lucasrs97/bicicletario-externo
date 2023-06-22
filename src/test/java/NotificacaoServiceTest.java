@@ -17,12 +17,10 @@ public class NotificacaoServiceTest {
 
     @Test
     public void testEnviarEmail() {
-        // Parâmetros para enviar e-mail
         String destinatario = "exemplo@teste.com";
         String assunto = "Assunto do e-mail";
         String mensagem = "Corpo da mensagem";
 
-        // Chama o método para enviar o e-mail
         String retorno = notificacaoService.enviarEmail(destinatario, assunto, mensagem);
 
         String retornoEsperado = "Enviando e-mail para: " + destinatario + " Assunto: " + assunto + " Mensagem: " + mensagem + " E-mail enviado com sucesso!";

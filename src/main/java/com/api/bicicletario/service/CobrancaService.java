@@ -15,7 +15,7 @@ import java.util.List;
 @Slf4j
 public class CobrancaService {
 
-    private List<Cobranca> cobrancas; // Lista simulada de cobranças
+    private List<Cobranca> cobrancas; // Lista de cobranças
 
     @Autowired
     private NotificacaoService notificacaoService;
