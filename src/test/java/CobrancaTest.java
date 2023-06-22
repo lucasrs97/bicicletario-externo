@@ -23,7 +23,6 @@ class CobrancaTest {
 
     @Test
     void testGettersAndSetters() {
-        // Mock the data
         Integer id = 1;
         String status = "pending";
         LocalDateTime horaSolicitacao = LocalDateTime.now();
@@ -32,7 +31,6 @@ class CobrancaTest {
         Integer ciclista = 123;
         String cartao = "1234567890";
 
-        // Set the expectations
         when(cobranca.getId()).thenReturn(id);
         when(cobranca.getStatus()).thenReturn(status);
         when(cobranca.getHoraSolicitacao()).thenReturn(horaSolicitacao);
@@ -41,7 +39,6 @@ class CobrancaTest {
         when(cobranca.getCiclista()).thenReturn(ciclista);
         when(cobranca.getCartao()).thenReturn(cartao);
 
-        // Verify the results
         Assertions.assertEquals(id, cobranca.getId());
         Assertions.assertEquals(status, cobranca.getStatus());
         Assertions.assertEquals(horaSolicitacao, cobranca.getHoraSolicitacao());
@@ -53,7 +50,6 @@ class CobrancaTest {
 
     @Test
     void testSetters() {
-        // Mock the data
         Integer id = 0;
         String status = "pending";
         LocalDateTime horaSolicitacao = LocalDateTime.now();
@@ -62,7 +58,6 @@ class CobrancaTest {
         Integer ciclista = 123;
         String cartao = "1234567890";
 
-        // Set the values using setters
         cobranca2.setId(id);
         cobranca2.setStatus(status);
         cobranca2.setHoraSolicitacao(horaSolicitacao);
@@ -71,7 +66,6 @@ class CobrancaTest {
         cobranca2.setCiclista(ciclista);
         cobranca2.setCartao(cartao);
 
-        // Verify the results
         Assertions.assertEquals(id, cobranca2.getId());
         Assertions.assertEquals(horaSolicitacao, cobranca2.getHoraSolicitacao());
         Assertions.assertEquals(horaFinalizacao, cobranca2.getHoraFinalizacao());

@@ -1,6 +1,5 @@
 package com.api.bicicletario.service;
 
-import com.api.bicicletario.exception.PagamentoNaoAutorizadoException;
 import com.api.bicicletario.model.Cobranca;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -8,8 +7,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,9 +16,6 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
 public class CobrancaServiceTest {
-    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-    String data = "31/12/2023";
-
     @Mock
     private NotificacaoService notificacaoService;
 
@@ -34,7 +28,7 @@ public class CobrancaServiceTest {
     }
 
     @Test
-    public void testObterCobrancasAtrasadas() throws ParseException {
+    public void testObterCobrancasAtrasadas() {
         // Criação de cobranças simuladas
         Cobranca cobrancaAtrasada = null;
         cobrancaAtrasada = new Cobranca(1, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1),50.0, 3, "1234566789");
@@ -61,7 +55,7 @@ public class CobrancaServiceTest {
     }
 
     @Test
-    public void testRealizarCobranca_PagamentoAutorizado() throws PagamentoNaoAutorizadoException, ParseException {
+    public void testRealizarCobranca_PagamentoAutorizado() {
         Cobranca cobranca = null;
         cobranca = new Cobranca(1, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1),50.0, 3, "1234566789");
         cobranca.setValor(10.0);
@@ -79,7 +73,7 @@ public class CobrancaServiceTest {
     }
 
     @Test
-    public void testEnviarNotificacao() throws ParseException {
+    public void testEnviarNotificacao() {
         Cobranca cobranca = new Cobranca(1, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1),50.0, 3, "1234566789");
         cobranca.setCiclista(1);
         cobranca.setHoraSolicitacao(LocalDateTime.now());

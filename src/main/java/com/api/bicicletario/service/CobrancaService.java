@@ -54,11 +54,7 @@ public class CobrancaService {
     }
 
     public boolean processarPagamento(double valor, String cartao) {
-        // Implementação simulada que sempre retorna sucesso
-        System.out.println("Processando pagamento...");
-        System.out.println("Valor: " + valor);
-        System.out.println("Cartão: " + cartao);
-        System.out.println("Pagamento autorizado!");
+        System.out.println("Processando pagamento...\n" + "Valor: " + valor + "\nCartão: " + cartao + "\nPagamento autorizado!");
         return true;
     }
 
