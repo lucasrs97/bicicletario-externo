@@ -24,12 +24,12 @@ public class CobrancaServiceTest {
     private CobrancaService cobrancaService;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         MockitoAnnotations.openMocks(this);
     }
 
     @Test
-    void testObterCobranca_Exists() {
+    void testObterCobrancaExistente() {
         Cobranca cobranca1 = new Cobranca(1, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1), 50.0, 3, "1234566789");
         Cobranca cobranca2 = new Cobranca(2, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1), 50.0, 3, "9877453112");
 
@@ -44,7 +44,7 @@ public class CobrancaServiceTest {
     }
 
     @Test
-    void testObterCobranca_NotExists() {
+    void testObterCobrancaInexistente() {
         Cobranca cobranca1 = new Cobranca(1, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1), 50.0, 3, "1234566789");
         Cobranca cobranca2 = new Cobranca(2, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1), 50.0, 3, "9877453112");
 
@@ -59,7 +59,7 @@ public class CobrancaServiceTest {
     }
 
     @Test
-    public void testObterCobrancasAtrasadas() {
+    void testObterCobrancasAtrasadas() {
         Cobranca cobrancaAtrasada = new Cobranca();
         cobrancaAtrasada.setStatus("PENDENTE");
         cobrancaAtrasada.setHoraSolicitacao(LocalDateTime.now().minusHours(13));
@@ -81,7 +81,7 @@ public class CobrancaServiceTest {
     }
 
     @Test
-    public void testRealizarCobrancaPagamentoAutorizado() {
+    void testRealizarCobrancaPagamentoAutorizado() {
         Cobranca cobranca = new Cobranca(1, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1), 50.0, 3, "1234566789");
         cobranca.setValor(10.0);
         cobranca.setCartao("1234566789");
@@ -98,7 +98,7 @@ public class CobrancaServiceTest {
     }
 
     @Test
-    void realizarCobranca_PagamentoNaoAutorizado_ExceptionLancada() {
+    void testRealizarCobrancaPagamentoNaoAutorizado() {
         // Dados de teste
         Cobranca cobranca = new Cobranca();
         cobranca.setId(2);
@@ -110,7 +110,7 @@ public class CobrancaServiceTest {
     }
 
     @Test
-    public void testEnviarNotificacao() {
+    void testEnviarNotificacao() {
         Cobranca cobranca = new Cobranca(1, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1), 50.0, 3, "1234566789");
         cobranca.setCiclista(1);
         cobranca.setHoraSolicitacao(LocalDateTime.now());
@@ -122,7 +122,7 @@ public class CobrancaServiceTest {
     }
 
     @Test
-    public void testProcessarPagamento() {
+    void testProcessarPagamento() {
         double valor = 100.0;
         String cartao = "1234567890";
 
@@ -130,7 +130,7 @@ public class CobrancaServiceTest {
     }
 
     @Test
-    public void testCriarMensagemNotificacao() {
+    void testCriarMensagemNotificacao() {
         Cobranca cobranca = new Cobranca(1, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1), 50.0, 3, "1234566789");
         cobranca.setCiclista(1);
         cobranca.setHoraSolicitacao(LocalDateTime.now());
@@ -148,56 +148,35 @@ public class CobrancaServiceTest {
     }
 
     @Test
-    public void testAdicionarCobrancaEmFila() {
-        // Criação do objeto mock para a classe CobrancaService
+    void testAdicionarCobrancaEmFila() {
         CobrancaService cobrancaServiceMock = mock(CobrancaService.class);
 
-        // Criação das cobranças para teste
         Cobranca cobranca1 = new Cobranca(1, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1), 50.0, 3, "1234566789");
         Cobranca cobranca2 = new Cobranca(2, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1), 50.0, 3, "9877453112");
 
-        // Chamada do método a ser testado
         cobrancaServiceMock.adicionarCobrancaEmFila(cobranca1);
         cobrancaServiceMock.adicionarCobrancaEmFila(cobranca2);
 
-        // Verificação se o método adicionarCobrancaEmFila foi chamado corretamente
         verify(cobrancaServiceMock).adicionarCobrancaEmFila(cobranca1);
         verify(cobrancaServiceMock).adicionarCobrancaEmFila(cobranca2);
     }
 
     @Test
-    public void testValidarCartao_CartaoValido() {
-        // Cenário
+    void testValidarCartaoCartaoValido() {
         String numeroCartaoValido = "4111 1111 1111 1111";
 
-        // Verificação
         assertTrue(cobrancaService.validarCartao(numeroCartaoValido));
     }
 
     @Test
-    public void testValidarCartao_CartaoInvalido_CaracteresNaoNumericos() {
-        // Cenário
-        String numeroCartaoInvalido = "4111 1111 A111 1111";
+    void testValidarCartaoCartaoInvalido() {
+        String caracteresNaoNumericos = "4111 1111 A111 1111";
+        String digitoAlterado = "4111 1111 1111 1121";
+        String cartaoVazio = "";
 
-        // Verificação
-        assertFalse(cobrancaService.validarCartao(numeroCartaoInvalido));
-    }
 
-    @Test
-    public void testValidarCartao_CartaoInvalido_CartaoVazio() {
-        // Cenário
-        String numeroCartaoInvalido = "";
-
-        // Verificação
-        assertFalse(cobrancaService.validarCartao(numeroCartaoInvalido));
-    }
-
-    @Test
-    public void testValidarCartao_CartaoInvalido_DigitoAlterado() {
-        // Cenário
-        String numeroCartaoInvalido = "4111 1111 1111 1121";
-
-        // Verificação
-        assertFalse(cobrancaService.validarCartao(numeroCartaoInvalido));
+        assertFalse(cobrancaService.validarCartao(caracteresNaoNumericos));
+        assertFalse(cobrancaService.validarCartao(digitoAlterado));
+        assertFalse(cobrancaService.validarCartao(cartaoVazio));
     }
 }

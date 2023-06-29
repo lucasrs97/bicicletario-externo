@@ -32,7 +32,7 @@ class CobrancaControllerTest {
     }
 
     @Test
-    void taxasAtrasadasPagamentoAutorizadoSucesso() throws PagamentoNaoAutorizadoException {
+    void testTaxasAtrasadasPagamentoAutorizado() throws PagamentoNaoAutorizadoException {
         Cobranca cobranca1 = new Cobranca(1, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1),50.0, 1, "1234566789");
         Cobranca cobranca2 = new Cobranca(2, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1),50.0, 2, "1234566789");
         List<Cobranca> cobrancasAtrasadas = new ArrayList<>();
@@ -58,7 +58,7 @@ class CobrancaControllerTest {
     }
 
     @Test
-    void taxasAtrasadasPagamentoNaoAutorizadoInternalServerError() throws PagamentoNaoAutorizadoException {
+    void testTaxasAtrasadasPagamentoNaoAutorizado() throws PagamentoNaoAutorizadoException {
         Cobranca cobranca1 = new Cobranca(1, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1),50.0, 3, "1234566789");
 
         List<Cobranca> cobrancasAtrasadas = new ArrayList<>();
@@ -77,7 +77,7 @@ class CobrancaControllerTest {
     }
 
     @Test
-    void taxasAtrasadasSemPagamentosAtrasadosSucesso() throws PagamentoNaoAutorizadoException {
+    void testTaxasAtrasadasSemPagamentosAtrasados() throws PagamentoNaoAutorizadoException {
         List<Cobranca> cobrancasAtrasadas = new ArrayList<>();
 
         when(cobrancaService.obterCobrancasAtrasadas()).thenReturn(cobrancasAtrasadas);
@@ -92,7 +92,7 @@ class CobrancaControllerTest {
     }
 
     @Test
-    void taxasAtrasadasListaDePagamentosAtrasadosVaziaSucesso() throws PagamentoNaoAutorizadoException {
+    void testTaxasAtrasadasListaDePagamentosAtrasadosVazia() throws PagamentoNaoAutorizadoException {
         when(cobrancaService.obterCobrancasAtrasadas()).thenReturn(new ArrayList<>());
 
         ResponseEntity<String> response = cobrancaController.cobrarTaxasAtrasadas();
@@ -105,7 +105,7 @@ class CobrancaControllerTest {
     }
 
     @Test
-    public void testIncluirCobrancaFila_WithValidData_ReturnsOk() {
+    void testIncluirCobrancaFila() {
         Cobranca novaCobranca = new Cobranca();
         novaCobranca.setCiclista(1);
         novaCobranca.setValor(100.0);
@@ -121,7 +121,7 @@ class CobrancaControllerTest {
     }
 
     @Test
-    public void testIncluirCobrancaFila_WithInvalidData_ReturnsUnprocessableEntity() {
+    void testIncluirCobrancaFilaDadosInvalidos() {
         Cobranca novaCobranca = new Cobranca();
 
         ResponseEntity<String> response = cobrancaController.incluirCobrancaFila(novaCobranca);
@@ -133,62 +133,48 @@ class CobrancaControllerTest {
     }
 
     @Test
-    void testObterCobranca_Existente() {
-        // Mock do objeto Cobranca
+    void testObterCobrancaExistente() {
         Cobranca cobrancaMock = new Cobranca();
         cobrancaMock.setId(1);
         cobrancaMock.setValor(100.0);
 
-        // Mock do serviço cobrancaService.obterCobranca()
         when(cobrancaService.obterCobranca(1)).thenReturn(cobrancaMock);
 
-        // Chama o método do controlador
         ResponseEntity<Cobranca> response = cobrancaController.obterCobranca(1);
 
-        // Verifica se o status da resposta é OK (200)
         assertEquals(HttpStatus.OK, response.getStatusCode());
 
-        // Verifica se a cobranca retornada é a mesma do mock
         assertEquals(cobrancaMock, response.getBody());
     }
 
     @Test
-    void testObterCobranca_Inexistente() {
-        // Mock do serviço cobrancaService.obterCobranca()
+    void testObterCobrancaInexistente() {
         when(cobrancaService.obterCobranca(1)).thenReturn(null);
 
-        // Chama o método do controlador
         ResponseEntity<Cobranca> response = cobrancaController.obterCobranca(1);
 
-        // Verifica se o status da resposta é NOT_FOUND (404)
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
 
     @Test
-    public void testValidarCartaoDeCredito_ValidCartao_ReturnsOk() {
-        // Arrange
+    void testValidarCartaoDeCreditoCartaoValido() {
         String cartao = "1234567890";
         when(cobrancaService.validarCartao(cartao)).thenReturn(true);
 
-        // Act
         ResponseEntity<String> response = cobrancaController.validarCartaoDeCredito(cartao);
 
-        // Assert
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals("Cartão validado com sucesso", response.getBody());
         verify(cobrancaService, times(1)).validarCartao(cartao);
     }
 
     @Test
-    public void testValidarCartaoDeCredito_InvalidCartao_ReturnsUnprocessableEntity() {
-        // Arrange
+    void testValidarCartaoDeCreditoCartaoInvalido() {
         String cartao = "9876543210";
         when(cobrancaService.validarCartao(cartao)).thenReturn(false);
 
-        // Act
         ResponseEntity<String> response = cobrancaController.validarCartaoDeCredito(cartao);
 
-        // Assert
         assertEquals(HttpStatus.UNPROCESSABLE_ENTITY, response.getStatusCode());
         assertEquals("Dados do cartão inválidos", response.getBody());
         verify(cobrancaService, times(1)).validarCartao(cartao);

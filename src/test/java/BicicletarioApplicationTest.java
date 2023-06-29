@@ -6,12 +6,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest(classes = BicicletarioApplication.class)
 class BicicletarioApplicationTest {
     @Test
-    void contextLoads() {
+    void testContextLoads() {
         Assertions.assertTrue(true, "Sucesso");
     }
 
     @Test
-    void mainTest() {
+    void testMain() {
         Assertions.assertTrue(true);
         BicicletarioApplication.main(new String[]{});
     }

@@ -1,6 +1,5 @@
 package com.api.bicicletario.service;
 
-import com.api.bicicletario.service.NotificacaoService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -13,12 +12,12 @@ public class NotificacaoServiceTest {
     private NotificacaoService notificacaoService;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         notificacaoService = new NotificacaoService();
     }
 
     @Test
-    public void testEnviarEmail() {
+    void testEnviarEmail() {
         String destinatario = "exemplo@teste.com";
         String assunto = "Assunto do e-mail";
         String mensagem = "Corpo da mensagem";
