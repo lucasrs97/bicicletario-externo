@@ -179,18 +179,18 @@ class CobrancaControllerTest {
         verify(cobrancaService, times(1)).validarCartao(cartao);
     }
 
-//    @Test
-//    public void testValidarCartaoDeCredito_InvalidCartao_ReturnsUnprocessableEntity() {
-//        // Arrange
-//        String cartao = "9876543210";
-//        when(cobrancaService.validarCartao(cartao)).thenReturn(false);
-//
-//        // Act
-//        ResponseEntity<String> response = cobrancaController.validarCartaoDeCredito(cartao);
-//
-//        // Assert
-//        assertEquals(HttpStatus.UNPROCESSABLE_ENTITY, response.getStatusCode());
-//        assertEquals("Dados do cartão inválidos", response.getBody());
-//        verify(cobrancaService, times(1)).validarCartao(cartao);
-//    }
+    @Test
+    public void testValidarCartaoDeCredito_InvalidCartao_ReturnsUnprocessableEntity() {
+        // Arrange
+        String cartao = "9876543210";
+        when(cobrancaService.validarCartao(cartao)).thenReturn(false);
+
+        // Act
+        ResponseEntity<String> response = cobrancaController.validarCartaoDeCredito(cartao);
+
+        // Assert
+        assertEquals(HttpStatus.UNPROCESSABLE_ENTITY, response.getStatusCode());
+        assertEquals("Dados do cartão inválidos", response.getBody());
+        verify(cobrancaService, times(1)).validarCartao(cartao);
+    }
 }
