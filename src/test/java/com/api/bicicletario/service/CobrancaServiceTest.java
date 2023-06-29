@@ -29,14 +29,41 @@ public class CobrancaServiceTest {
     }
 
     @Test
+    void testObterCobranca_Exists() {
+        Cobranca cobranca1 = new Cobranca(1, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1),50.0, 3, "1234566789");
+        Cobranca cobranca2 = new Cobranca(2, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1),50.0, 3, "9877453112");
+
+        List<Cobranca> cobrancas = new ArrayList<>();
+        cobrancas.add(cobranca1);
+        cobrancas.add(cobranca2);
+        cobrancaService.setCobrancas(cobrancas);
+
+        Cobranca result = cobrancaService.obterCobranca(cobranca1.getId());
+
+        assertEquals(cobranca1, result);
+    }
+
+    @Test
+    void testObterCobranca_NotExists() {
+        Cobranca cobranca1 = new Cobranca(1, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1),50.0, 3, "1234566789");
+        Cobranca cobranca2 = new Cobranca(2, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1),50.0, 3, "9877453112");
+
+        List<Cobranca> cobrancas = new ArrayList<>();
+        cobrancas.add(cobranca1);
+        cobrancas.add(cobranca2);
+        cobrancaService.setCobrancas(cobrancas);
+
+        Cobranca result = cobrancaService.obterCobranca(3);
+
+        assertNull(result);
+    }
+    @Test
     public void testObterCobrancasAtrasadas() {
-        Cobranca cobrancaAtrasada = null;
-        cobrancaAtrasada = new Cobranca();
+        Cobranca cobrancaAtrasada = new Cobranca();
         cobrancaAtrasada.setStatus("PENDENTE");
         cobrancaAtrasada.setHoraSolicitacao(LocalDateTime.now().minusHours(13));
 
-        Cobranca cobrancaNaoAtrasada = null;
-        cobrancaNaoAtrasada = new Cobranca();
+        Cobranca cobrancaNaoAtrasada = new Cobranca();
         cobrancaNaoAtrasada.setStatus("PENDENTE");
         cobrancaNaoAtrasada.setHoraSolicitacao(LocalDateTime.now().minusHours(2));
 
@@ -54,8 +81,7 @@ public class CobrancaServiceTest {
 
     @Test
     public void testRealizarCobrancaPagamentoAutorizado() {
-        Cobranca cobranca = null;
-        cobranca = new Cobranca(1, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1),50.0, 3, "1234566789");
+        Cobranca cobranca = new Cobranca(1, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1),50.0, 3, "1234566789");
         cobranca.setValor(10.0);
         cobranca.setCartao("1234566789");
 
