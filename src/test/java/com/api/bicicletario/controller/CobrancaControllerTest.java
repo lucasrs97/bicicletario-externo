@@ -1,4 +1,5 @@
-import com.api.bicicletario.controller.CobrancaController;
+package com.api.bicicletario.controller;
+
 import com.api.bicicletario.exception.PagamentoNaoAutorizadoException;
 import com.api.bicicletario.model.Cobranca;
 import com.api.bicicletario.service.CobrancaService;
@@ -11,17 +12,14 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 class CobrancaControllerTest {
-    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-    String data = "31/12/2023";
-
     @Mock
     private CobrancaService cobrancaService;
 
@@ -107,17 +105,62 @@ class CobrancaControllerTest {
     }
 
     @Test
-    void taxasAtrasadasSemPagamentosAtrasadosEnviarCobranca() throws PagamentoNaoAutorizadoException {
-        List<Cobranca> cobrancasAtrasadas = new ArrayList<>();
+    public void testIncluirCobrancaFila_WithValidData_ReturnsOk() {
+        Cobranca novaCobranca = new Cobranca();
+        novaCobranca.setCiclista(1);
+        novaCobranca.setValor(100.0);
 
-        when(cobrancaService.obterCobrancasAtrasadas()).thenReturn(cobrancasAtrasadas);
+        doNothing().when(cobrancaService).adicionarCobrancaEmFila(novaCobranca);
 
-        ResponseEntity<String> response = cobrancaController.cobrarTaxasAtrasadas();
+        ResponseEntity<String> response = cobrancaController.incluirCobrancaFila(novaCobranca);
+
+        verify(cobrancaService, times(1)).adicionarCobrancaEmFila(novaCobranca);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals("Cobranças atrasadas processadas com sucesso.", response.getBody());
-        verify(cobrancaService, times(1)).obterCobrancasAtrasadas();
-        verify(cobrancaService, never()).realizarCobranca(any());
-        verify(cobrancaService, never()).enviarNotificacao(any());
+        assertEquals("Cobrança adicionada com sucesso.", response.getBody());
+    }
+
+    @Test
+    public void testIncluirCobrancaFila_WithInvalidData_ReturnsUnprocessableEntity() {
+        Cobranca novaCobranca = new Cobranca();
+
+        ResponseEntity<String> response = cobrancaController.incluirCobrancaFila(novaCobranca);
+
+        verify(cobrancaService, never()).adicionarCobrancaEmFila(novaCobranca);
+
+        assertEquals(HttpStatus.UNPROCESSABLE_ENTITY, response.getStatusCode());
+        assertEquals("Dados inválidos", response.getBody());
+    }
+
+    @Test
+    void testObterCobranca_Existente() {
+        // Mock do objeto Cobranca
+        Cobranca cobrancaMock = new Cobranca();
+        cobrancaMock.setId(1);
+        cobrancaMock.setValor(100.0);
+
+        // Mock do serviço cobrancaService.obterCobranca()
+        when(cobrancaService.obterCobranca(1)).thenReturn(cobrancaMock);
+
+        // Chama o método do controlador
+        ResponseEntity<Cobranca> response = cobrancaController.obterCobranca(1);
+
+        // Verifica se o status da resposta é OK (200)
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+
+        // Verifica se a cobranca retornada é a mesma do mock
+        assertEquals(cobrancaMock, response.getBody());
+    }
+
+    @Test
+    void testObterCobranca_Inexistente() {
+        // Mock do serviço cobrancaService.obterCobranca()
+        when(cobrancaService.obterCobranca(1)).thenReturn(null);
+
+        // Chama o método do controlador
+        ResponseEntity<Cobranca> response = cobrancaController.obterCobranca(1);
+
+        // Verifica se o status da resposta é NOT_FOUND (404)
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
 }

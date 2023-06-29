@@ -1,3 +1,5 @@
+package com.api.bicicletario.service;
+
 import com.api.bicicletario.service.NotificacaoService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

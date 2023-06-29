@@ -1,3 +1,5 @@
+package com.api.bicicletario.model;
+
 import com.api.bicicletario.model.Cobranca;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

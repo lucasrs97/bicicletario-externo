@@ -7,7 +7,7 @@ public class Cobranca {
     private String status;
     private LocalDateTime horaSolicitacao;
     private LocalDateTime horaFinalizacao;
-    private double valor;
+    private Double valor;
     private Integer ciclista;
     private String cartao;
 
@@ -56,7 +56,7 @@ public class Cobranca {
         this.horaFinalizacao = horaFinalizacao;
     }
 
-    public double getValor() {
+    public Double getValor() {
         return valor;
     }
 

@@ -1,5 +1,6 @@
 package com.api.bicicletario.service;
 
+import com.api.bicicletario.exception.PagamentoNaoAutorizadoException;
 import com.api.bicicletario.model.Cobranca;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -67,6 +68,18 @@ public class CobrancaServiceTest {
         assertTrue(resultado);
         assertEquals("Aguardando pagamento", cobranca.getStatus());
         assertNotNull(cobranca.getHoraFinalizacao());
+    }
+
+    @Test
+    void realizarCobranca_PagamentoNaoAutorizado_ExceptionLancada() {
+        // Dados de teste
+        Cobranca cobranca = new Cobranca();
+        cobranca.setId(2);
+        cobranca.setValor(200);
+        cobranca.setCartao("");
+
+        // Verifica se a exceção é lançada
+        assertThrows(PagamentoNaoAutorizadoException.class, () -> cobrancaService.realizarCobranca(cobranca));
     }
 
     @Test
