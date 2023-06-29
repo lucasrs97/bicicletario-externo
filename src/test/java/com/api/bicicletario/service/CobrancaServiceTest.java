@@ -147,15 +147,57 @@ public class CobrancaServiceTest {
         assertEquals(mensagemEsperada, mensagem);
     }
 
-//    @Test
-//    public void testAdicionarCobrancaEmFila() {
-//        Cobranca cobranca1 = new Cobranca(1, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1), 50.0, 3, "1234566789");
-//        Cobranca cobranca2 = new Cobranca(2, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1), 50.0, 3, "9877453112");
-//
-//        cobrancaService.adicionarCobrancaEmFila(cobranca1);
-//        cobrancaService.adicionarCobrancaEmFila(cobranca2);
-//
-//        verify(cobrancaService).adicionarCobrancaEmFila(cobranca1);
-//        verify(cobrancaService).adicionarCobrancaEmFila(cobranca2);
-//    }
+    @Test
+    public void testAdicionarCobrancaEmFila() {
+        // Criação do objeto mock para a classe CobrancaService
+        CobrancaService cobrancaServiceMock = mock(CobrancaService.class);
+
+        // Criação das cobranças para teste
+        Cobranca cobranca1 = new Cobranca(1, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1), 50.0, 3, "1234566789");
+        Cobranca cobranca2 = new Cobranca(2, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1), 50.0, 3, "9877453112");
+
+        // Chamada do método a ser testado
+        cobrancaServiceMock.adicionarCobrancaEmFila(cobranca1);
+        cobrancaServiceMock.adicionarCobrancaEmFila(cobranca2);
+
+        // Verificação se o método adicionarCobrancaEmFila foi chamado corretamente
+        verify(cobrancaServiceMock).adicionarCobrancaEmFila(cobranca1);
+        verify(cobrancaServiceMock).adicionarCobrancaEmFila(cobranca2);
+    }
+
+    @Test
+    public void testValidarCartao_CartaoValido() {
+        // Cenário
+        String numeroCartaoValido = "4111 1111 1111 1111";
+
+        // Verificação
+        assertTrue(cobrancaService.validarCartao(numeroCartaoValido));
+    }
+
+    @Test
+    public void testValidarCartao_CartaoInvalido_CaracteresNaoNumericos() {
+        // Cenário
+        String numeroCartaoInvalido = "4111 1111 A111 1111";
+
+        // Verificação
+        assertFalse(cobrancaService.validarCartao(numeroCartaoInvalido));
+    }
+
+    @Test
+    public void testValidarCartao_CartaoInvalido_CartaoVazio() {
+        // Cenário
+        String numeroCartaoInvalido = "";
+
+        // Verificação
+        assertFalse(cobrancaService.validarCartao(numeroCartaoInvalido));
+    }
+
+    @Test
+    public void testValidarCartao_CartaoInvalido_DigitoAlterado() {
+        // Cenário
+        String numeroCartaoInvalido = "4111 1111 1111 1121";
+
+        // Verificação
+        assertFalse(cobrancaService.validarCartao(numeroCartaoInvalido));
+    }
 }
