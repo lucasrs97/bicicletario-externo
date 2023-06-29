@@ -6,8 +6,7 @@ import org.mockito.InjectMocks;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class NotificacaoServiceTest {
-
+class NotificacaoServiceTest {
     @InjectMocks
     private NotificacaoService notificacaoService;
 

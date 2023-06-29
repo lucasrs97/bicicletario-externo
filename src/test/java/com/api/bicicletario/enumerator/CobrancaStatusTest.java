@@ -3,7 +3,7 @@ package com.api.bicicletario.enumerator;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class CobrancaStatusTest {
+class CobrancaStatusTest {
     @Test
     void testEnumValues() {
         assertEquals(5, CobrancaStatus.values().length);

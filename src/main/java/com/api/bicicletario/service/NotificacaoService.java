@@ -6,8 +6,6 @@ import org.springframework.stereotype.Service;
 public class NotificacaoService {
 
     public String enviarEmail(String destinatario, String assunto, String mensagem) {
-        String retorno = "Enviando e-mail para: " + destinatario + " Assunto: " + assunto + " Mensagem: " + mensagem + " E-mail enviado com sucesso!";
-
-        return retorno;
+        return "Enviando e-mail para: " + destinatario + " Assunto: " + assunto + " Mensagem: " + mensagem + " E-mail enviado com sucesso!";
     }
 }
