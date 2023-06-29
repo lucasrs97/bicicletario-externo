@@ -30,8 +30,8 @@ public class CobrancaServiceTest {
 
     @Test
     void testObterCobranca_Exists() {
-        Cobranca cobranca1 = new Cobranca(1, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1),50.0, 3, "1234566789");
-        Cobranca cobranca2 = new Cobranca(2, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1),50.0, 3, "9877453112");
+        Cobranca cobranca1 = new Cobranca(1, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1), 50.0, 3, "1234566789");
+        Cobranca cobranca2 = new Cobranca(2, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1), 50.0, 3, "9877453112");
 
         List<Cobranca> cobrancas = new ArrayList<>();
         cobrancas.add(cobranca1);
@@ -45,8 +45,8 @@ public class CobrancaServiceTest {
 
     @Test
     void testObterCobranca_NotExists() {
-        Cobranca cobranca1 = new Cobranca(1, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1),50.0, 3, "1234566789");
-        Cobranca cobranca2 = new Cobranca(2, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1),50.0, 3, "9877453112");
+        Cobranca cobranca1 = new Cobranca(1, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1), 50.0, 3, "1234566789");
+        Cobranca cobranca2 = new Cobranca(2, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1), 50.0, 3, "9877453112");
 
         List<Cobranca> cobrancas = new ArrayList<>();
         cobrancas.add(cobranca1);
@@ -57,6 +57,7 @@ public class CobrancaServiceTest {
 
         assertNull(result);
     }
+
     @Test
     public void testObterCobrancasAtrasadas() {
         Cobranca cobrancaAtrasada = new Cobranca();
@@ -81,7 +82,7 @@ public class CobrancaServiceTest {
 
     @Test
     public void testRealizarCobrancaPagamentoAutorizado() {
-        Cobranca cobranca = new Cobranca(1, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1),50.0, 3, "1234566789");
+        Cobranca cobranca = new Cobranca(1, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1), 50.0, 3, "1234566789");
         cobranca.setValor(10.0);
         cobranca.setCartao("1234566789");
 
@@ -110,7 +111,7 @@ public class CobrancaServiceTest {
 
     @Test
     public void testEnviarNotificacao() {
-        Cobranca cobranca = new Cobranca(1, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1),50.0, 3, "1234566789");
+        Cobranca cobranca = new Cobranca(1, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1), 50.0, 3, "1234566789");
         cobranca.setCiclista(1);
         cobranca.setHoraSolicitacao(LocalDateTime.now());
         cobranca.setValor(50.0);
@@ -127,9 +128,10 @@ public class CobrancaServiceTest {
 
         assertTrue(cobrancaService.processarPagamento(valor, cartao));
     }
+
     @Test
     public void testCriarMensagemNotificacao() {
-        Cobranca cobranca = new Cobranca(1, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1),50.0, 3, "1234566789");
+        Cobranca cobranca = new Cobranca(1, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1), 50.0, 3, "1234566789");
         cobranca.setCiclista(1);
         cobranca.setHoraSolicitacao(LocalDateTime.now());
         cobranca.setValor(100.0);
@@ -143,5 +145,17 @@ public class CobrancaServiceTest {
                 "Atenciosamente,\n" +
                 "Equipe do sistema de aluguel de bicicletas";
         assertEquals(mensagemEsperada, mensagem);
+    }
+
+    @Test
+    public void testAdicionarCobrancaEmFila() {
+        Cobranca cobranca1 = new Cobranca(1, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1), 50.0, 3, "1234566789");
+        Cobranca cobranca2 = new Cobranca(2, "Aguardando pagamento", LocalDateTime.now(), LocalDateTime.now().plusHours(1), 50.0, 3, "9877453112");
+
+        cobrancaService.adicionarCobrancaEmFila(cobranca1);
+        cobrancaService.adicionarCobrancaEmFila(cobranca2);
+
+        verify(cobrancaService).adicionarCobrancaEmFila(cobranca1);
+        verify(cobrancaService).adicionarCobrancaEmFila(cobranca2);
     }
 }

@@ -163,4 +163,34 @@ class CobrancaControllerTest {
         // Verifica se o status da resposta é NOT_FOUND (404)
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
+
+    @Test
+    public void testValidarCartaoDeCredito_ValidCartao_ReturnsOk() {
+        // Arrange
+        String cartao = "1234567890";
+        when(cobrancaService.validarCartao(cartao)).thenReturn(true);
+
+        // Act
+        ResponseEntity<String> response = cobrancaController.validarCartaoDeCredito(cartao);
+
+        // Assert
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals("Cartão validado com sucesso", response.getBody());
+        verify(cobrancaService, times(1)).validarCartao(cartao);
+    }
+
+//    @Test
+//    public void testValidarCartaoDeCredito_InvalidCartao_ReturnsUnprocessableEntity() {
+//        // Arrange
+//        String cartao = "9876543210";
+//        when(cobrancaService.validarCartao(cartao)).thenReturn(false);
+//
+//        // Act
+//        ResponseEntity<String> response = cobrancaController.validarCartaoDeCredito(cartao);
+//
+//        // Assert
+//        assertEquals(HttpStatus.UNPROCESSABLE_ENTITY, response.getStatusCode());
+//        assertEquals("Dados do cartão inválidos", response.getBody());
+//        verify(cobrancaService, times(1)).validarCartao(cartao);
+//    }
 }
