@@ -101,6 +101,7 @@ public class CobrancaService {
         notificacaoService.enviarEmail(cobranca.getCiclista().toString(), "Cobrança em atraso", mensagem);
     }
 
+    // Integração 1
     public boolean validarCartao(String numeroCartao) {
         // Remove espaços em branco e caracteres não numéricos
         String numeroLimpo = numeroCartao.replaceAll("\\s+", "");
