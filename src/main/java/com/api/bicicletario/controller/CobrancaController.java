@@ -59,7 +59,7 @@ public class CobrancaController {
     }
 
     @PostMapping("/validaCartaoDeCredito")
-    public ResponseEntity<String> validarCartaoDeCredito(String cartao) {
+    public ResponseEntity<String> validarCartaoDeCredito(@RequestBody String cartao) {
         boolean cartaoValido =  cobrancaService.validarCartao(cartao);
 
         if (cartaoValido) {
